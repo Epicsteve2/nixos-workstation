@@ -249,7 +249,10 @@
     after = [ "display-manager.service" ];
   };
 
-  # programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
+  programs = {
+    gpg.enable = true;
+  };
 
   programs.nano.nanorc = ''
     set constantshow
