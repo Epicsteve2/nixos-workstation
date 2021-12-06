@@ -61,7 +61,7 @@
     alacritty = {
       enable = true;
       settings = {
-        working_directory = "~/code-monkey/nixos-workstation";
+        working_directory = "/home/stephen/code-monkey/nixos-workstation";
         background_opacity = 1;
         font = {
           size = 14;
