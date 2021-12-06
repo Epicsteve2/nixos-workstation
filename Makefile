@@ -11,6 +11,13 @@ MAGENTA := $(shell tput setaf 5)
 CYAN := $(shell tput setaf 6)
 RESETCOLOR := $(shell tput sgr0)
 
+.PHONY: help ## Show this help
+help:
+	@grep -E '^\.PHONY: [a-zA-Z_-]+ .*?## .*$$' $(MAKEFILE_LIST) \
+		| awk 'BEGIN {FS = "(: |##)"}; {printf "$(cyan)%-30s\$(reset) %s\n", $$2, $$3}' \
+		| $(SED) -e 's|$${red}|${red}|g' -e 's|$${reset}|${reset}|g' \
+		| less --chop-long-lines --RAW-CONTROL-CHARS
+
 .PHONY: rebuild
 rebuild:
 	@$(MAKE) rebuild-switch || $(MAKE) rebuild-fail
