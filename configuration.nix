@@ -2,8 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   imports = [ # Include the results of the hardware scan.
     <home-manager/nixos>
     ./hardware-configuration.nix
@@ -22,6 +21,8 @@
       # this only works cuz 
       # timeout = 10;
       default = "saved";
+      # efiSupport = true;
+      # efiInstallAsRemovable = true;
       gfxmodeEfi = "1920x1080";
       gfxmodeBios = "1920x1080";
       # font = "Meslo LGS Nerd Font";
@@ -32,6 +33,14 @@
         "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
 
     };
+  };
+  environment.variables = rec {
+    BROWSER = "brave";
+    EDITOR = "spacevim";
+    VISUAL = "spacevim";
+    # MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    # QT_QPA_PLATFORMTHEME = "qt5ct";
+    TERMINAL = "alacritty";
   };
   networking.hostName = "SteveNixOS"; # Define your hostname.
 
@@ -97,9 +106,8 @@
             name = "Arc";
           };
         };
-        background = builtins.fetchurl {
-          url = "https://i.imgur.com/QLntV2f.jpg";
-        };
+        background =
+          builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
         #background = pkgs.fetchurl {
         #   url =
         #    "https://raw.githubusercontent.com/mbprtpmix/nixos/testing/wallpapers/mountains.jpg";
@@ -211,6 +219,9 @@
     bottom
     gping
     procs
+    xclip
+    copyq
+    font-manager
     mpv
     any-nix-shell
     killall
@@ -227,12 +238,14 @@
     grub2
     starship
     micro
-    sublime4
+    gnupg
+    sublime4-dev
     terminator
     wezterm
     zoxide
     macchina
     freshfetch
+    nitrogen
     ranger
   ];
 
@@ -249,9 +262,20 @@
     after = [ "display-manager.service" ];
   };
 
-  programs.home-manager.enable = true;
   programs = {
-    gpg.enable = true;
+    # gpg.enable = true;
+    # exa.enable = true;
+    # fzf.enable = true;
+    # home-manager.enable = true;
+    # zoxide.enable = true;
+    htop = {
+      settings = {
+        sort_direction = true;
+        sort_key = "PERCENT_CPU";
+        hide_kernel_threads = true;
+        hide_userland_threads = true;
+      };
+    };
   };
 
   programs.nano.nanorc = ''
