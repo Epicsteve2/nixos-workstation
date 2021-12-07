@@ -20,7 +20,7 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   services.flameshot = { enable = true; };
-  gtk = {
+  gtk = { 
     enable = true;
     iconTheme.name = "Arc";
     iconTheme.package = pkgs.arc-icon-theme;
@@ -97,7 +97,6 @@
         let modifier = config.xsession.windowManager.i3.config.modifier;
         in lib.mkOptionDefault {
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
-          "${modifier}+t" = "exec ${pkgs.alacritty}/bin/alacritty";
           "${modifier}+q" = "kill";
           "${modifier}+space" = "floating toggle";
           "${modifier}+d" =

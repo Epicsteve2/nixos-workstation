@@ -18,27 +18,6 @@ help:
 		| $(SED) -e 's|$${red}|${red}|g' -e 's|$${reset}|${reset}|g' \
 		| less --chop-long-lines --RAW-CONTROL-CHARS
 
-.PHONY: rebuild
-rebuild:
-	@$(MAKE) rebuild-switch || $(MAKE) rebuild-fail
-
-.PHONY: rebuild-switch
-rebuild-switch:
-	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
-	@echo "$(CYAN)Copying current configurations...$(RESETCOLOR)"
-	@cp --verbose /etc/nixos/configuration.nix .current-configuration.nix || true
-	@delta .current-configuration.nix configuration.nix || true
-	@echo "$(CYAN)Moving changed configurations...$(RESETCOLOR)"
-	@sudo cp --verbose configuration.nix /etc/nixos/configuration.nix || true
-	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
-	@sudo nixos-rebuild switch
-
-.PHONY: rebuild-fail
-rebuild-fail:
-	@echo
-	@echo "$(RED)rebuild-fail$(RESETCOLOR)"
-	@sudo cp --verbose .current-configuration.nix /etc/nixos/configuration.nix
-
 .PHONY: home-manager
 home-manager:
 	@$(MAKE) home-manager-switch || $(MAKE) home-manager-fail
@@ -59,6 +38,27 @@ home-manager-fail:
 	@echo
 	@echo "$(RED)home-manager-fail$(RESETCOLOR)"
 	@cp --verbose .current-home.nix $${HOME}/.config/nixpkgs/home.nix
+
+.PHONY: rebuild
+rebuild:
+	@$(MAKE) rebuild-switch || $(MAKE) rebuild-fail
+
+.PHONY: rebuild-switch
+rebuild-switch:
+	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
+	@echo "$(CYAN)Copying current configurations...$(RESETCOLOR)"
+	@cp --verbose /etc/nixos/configuration.nix .current-configuration.nix || true
+	@delta .current-configuration.nix configuration.nix || true
+	@echo "$(CYAN)Moving changed configurations...$(RESETCOLOR)"
+	@sudo cp --verbose configuration.nix /etc/nixos/configuration.nix || true
+	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
+	@sudo nixos-rebuild switch
+
+.PHONY: rebuild-fail
+rebuild-fail:
+	@echo
+	@echo "$(RED)rebuild-fail$(RESETCOLOR)"
+	@sudo cp --verbose .current-configuration.nix /etc/nixos/configuration.nix
 
 help:
 	@echo hi
