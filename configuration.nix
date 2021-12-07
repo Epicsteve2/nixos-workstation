@@ -1,36 +1,50 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }: {
   imports = [ # Include the results of the hardware scan.
     <home-manager/nixos>
     ./hardware-configuration.nix
   ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+        inherit pkgs;
+      };
+  };
 
   boot.loader = {
     # # Use the systemd-boot EFI boot loader.
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = false;
     timeout = 10;
     grub = {
       # grub isn't used
       # device = "nodev";
-      # version = 2;
-      # enable = true;
+      devices = [ "nodev" ];
+      version = 2;
+      enable = true;
       # this only works cuz 
       # timeout = 10;
       default = "saved";
-      # efiSupport = true;
-      # efiInstallAsRemovable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
       gfxmodeEfi = "1920x1080";
       gfxmodeBios = "1920x1080";
       # font = "Meslo LGS Nerd Font";
       #    theme = pkgs.nixos-grub2-theme;
-      #    extraConfig = "set theme=${pkgs.plasma5.breeze-grub}/grub/themes/breeze/theme.txt";
+      #  extraConfig = "set theme=${pkgs.plasma5.breeze-grub}/grub/themes/breeze/theme.txt";
 
       extraConfig =
         "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
+      extraEntries = ''
+        menuentry "Reboot" {
+          reboot
+        }
+        menuentry "Poweroff" {
+          halt
+        }
+      '';
 
     };
   };
@@ -38,8 +52,6 @@
     BROWSER = "brave";
     EDITOR = "spacevim";
     VISUAL = "spacevim";
-    # MANPAGER = "sh -c 'col -bx | bat -l man -p'";
-    # QT_QPA_PLATFORMTHEME = "qt5ct";
     TERMINAL = "alacritty";
   };
   networking.hostName = "SteveNixOS"; # Define your hostname.
@@ -55,82 +67,40 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
-    font = "FiraCode";
+    font = "FiraCode Nerd Font";
     keyMap = "us";
   };
 
   fonts.fonts = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" "Monofur" "Meslo" ]; }) ];
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  # # services.xserver.displayManager.gdm.enable = true;
-
-  # # services.xserver.desktopManager.gnome.enable = true;
-  # virtualisation.virtualbox.guest.enable = true;
-  # # services.xserver.desktopManager.lxqt.enable = true;
-  # # services.xserver.desktopManager.cinnamon.enable = true;
-  # # services.xserver.desktopManager.xfce.enable = true;
-  # services.xserver.displayManager.autoLogin.enable = true;
-  # services.xserver.displayManager.autoLogin.user = "stephen";
-  # # services.xserver.windowManager.leftwm.enable = true;
-  # services.xserver.windowManager.leftwm.enable = true;
-
   services.xserver = {
     enable = true;
     layout = "us";
-    # desktopManager = {
-    #   default = "xfce";
-    #   xterm.enable = false;
-    #   xfce = {
-    #     enable = true;
-    #     noDesktop = true;
-    #     enableXfwm = false;
-    #   };
-    # };
-    # windowManager.i3.enable = true;
 
     displayManager = {
-      #setupCommands = "xrandr --output Virtual1 --mode 1920x1080";
       lightdm = {
         enable = true;
-        # greeters.enso.enable = true;
         greeters.gtk = {
           enable = true;
-          theme = {
-            package = pkgs.arc-theme;
-            name = "Arc-Dark";
-          };
-          iconTheme = {
-            package = pkgs.arc-icon-theme;
-            name = "Arc";
-          };
+          theme.name = "Sweet-Dark";
+          theme.package = pkgs.sweet;
+          iconTheme.name = "Arc";
+          iconTheme.package = pkgs.arc-icon-theme;
+          # Really weird bug? idk man
+          extraConfig = "";
         };
         background =
           builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
-        #background = pkgs.fetchurl {
-        #   url =
-        #    "https://raw.githubusercontent.com/mbprtpmix/nixos/testing/wallpapers/mountains.jpg";
-        #    sha256 = "0k7lpj7rlb08bwq3wy9sbbq44rml55jyp9iy4ipwzy4bch0mc6y4";
-        #};
-
-        #greeters.gtk = {
-        #  theme.name = "Sweet-Dark";
-        #  iconTheme.name = "Arc";
-        #  cursorTheme.name = "Capitaine Cursors";
-        #  clock-format = "%H:%M";
-        #  indicators = [ "~clock" "~spacer" "~host" "~spacer" "~power" ];
-        #  extraConfig = ''
-        #    font-name = Unifont 12
-        #  '';
-        # };
-
+        # So close! doesn't work tho
+        # greeter.package = pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter;
+        # greeter.name = "lightdm-webkit2-greeter-2.2.5";
       };
       defaultSession = "none+i3";
-      autoLogin = {
-        enable = true;
-        user = "stephen";
-      };
+      # autoLogin = {
+      #   enable = true;
+      #   user = "stephen";
+      # };
     };
 
     desktopManager = {
@@ -184,9 +154,11 @@
   # List packages installed in system profile. To search, run:
   #   $ nix search wget
   environment.systemPackages = with pkgs; [
-    arc-icon-theme
-    arc-theme
-    meslo-lgs-nf
+    # arc-icon-theme
+    # arc-theme
+    # meslo-lgs-nf
+
+    # nur.repos.kira-bruneau.lightdm-webkit2-greeter
 
     neovim
     spacevim
@@ -229,6 +201,7 @@
     nomacs
     qview
     cinnamon.nemo
+    hexyl
     xfce.thunar
     qpdfview
     brave

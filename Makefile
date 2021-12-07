@@ -1,6 +1,6 @@
 SHELL := $(shell which bash)
 .SHELLFLAGS := -eu -o pipefail -c
-.DEFAULT_GOAL := rebuild
+.DEFAULT_GOAL := help
 
 
 RED := $(shell tput setaf 1)
@@ -14,11 +14,10 @@ RESETCOLOR := $(shell tput sgr0)
 .PHONY: help ## Show this help
 help:
 	@grep -E '^\.PHONY: [a-zA-Z_-]+ .*?## .*$$' $(MAKEFILE_LIST) \
-		| awk 'BEGIN {FS = "(: |##)"}; {printf "$(cyan)%-30s\$(reset) %s\n", $$2, $$3}' \
-		| $(SED) -e 's|$${red}|${red}|g' -e 's|$${reset}|${reset}|g' \
+		| awk 'BEGIN {FS = "(: |##)"}; {printf "$(CYAN) %-30s$(RESETCOLOR) %s\n", $$2, $$3}' \
 		| less --chop-long-lines --RAW-CONTROL-CHARS
 
-.PHONY: home-manager
+.PHONY: home-manager ## Prints a diff of home-manager changes, then 
 home-manager:
 	@$(MAKE) home-manager-switch || $(MAKE) home-manager-fail
 
@@ -27,7 +26,7 @@ home-manager-switch:
 	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
 	@echo "$(CYAN)Copying current home...$(RESETCOLOR)"
 	@cp --verbose $${HOME}/.config/nixpkgs/home.nix .current-home.nix || true
-	@delta .current-home.nix home.nix || true
+	@delta --paging never -- .current-home.nix home.nix || true
 	@echo "$(CYAN)Moving changed home...$(RESETCOLOR)"
 	@cp --verbose home.nix $${HOME}/.config/nixpkgs/home.nix || true
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
@@ -59,6 +58,3 @@ rebuild-fail:
 	@echo
 	@echo "$(RED)rebuild-fail$(RESETCOLOR)"
 	@sudo cp --verbose .current-configuration.nix /etc/nixos/configuration.nix
-
-help:
-	@echo hi
