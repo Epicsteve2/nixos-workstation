@@ -15,28 +15,23 @@
 
   boot.loader = {
     # # Use the systemd-boot EFI boot loader.
+    # probably VM's only
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = false;
     timeout = 10;
     grub = {
-      # grub isn't used
-      # device = "nodev";
       devices = [ "nodev" ];
       version = 2;
       enable = true;
-      # this only works cuz 
-      # timeout = 10;
       default = "saved";
       efiSupport = true;
       efiInstallAsRemovable = true;
       gfxmodeEfi = "1920x1080";
       gfxmodeBios = "1920x1080";
-      # font = "Meslo LGS Nerd Font";
-      #    theme = pkgs.nixos-grub2-theme;
-      #  extraConfig = "set theme=${pkgs.plasma5.breeze-grub}/grub/themes/breeze/theme.txt";
+      # extraConfig = "set theme=${pkgs.libsForQt5.breeze-grub}/grub/themes/breeze/theme.txt";
 
-      extraConfig =
-        "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
+      # theme = pkgs.libsForQt5.breeze-grub;
+      #extraConfig = "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
       extraEntries = ''
         menuentry "Reboot" {
           reboot
@@ -45,7 +40,6 @@
           halt
         }
       '';
-
     };
   };
   environment.variables = rec {
@@ -92,15 +86,18 @@
         };
         background =
           builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
+
         # So close! doesn't work tho
-        # greeter.package = pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter;
-        # greeter.name = "lightdm-webkit2-greeter-2.2.5";
+        # greeter.package = pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
+        # greeter.name = "lightdm-webkit2-greeter";
+        # greeter.enable = true;
+        # extraConfig = "";
       };
       defaultSession = "none+i3";
-      # autoLogin = {
-      #   enable = true;
-      #   user = "stephen";
-      # };
+      autoLogin = {
+        enable = true;
+        user = "stephen";
+      };
     };
 
     desktopManager = {
@@ -141,11 +138,6 @@
     shell = pkgs.zsh;
   };
 
-  # home-manager.users.hm = { pkgs, ... }: {
-  #   # home.packages = [ pkgs.atool pkgs.httpie ];
-  #   shell = pkgs.zsh;
-  # };
-
   programs.zsh.enable = true;
   security.sudo.wheelNeedsPassword = false;
   # users.users.defaultUserShell = pkgs.zsh;
@@ -154,12 +146,6 @@
   # List packages installed in system profile. To search, run:
   #   $ nix search wget
   environment.systemPackages = with pkgs; [
-    # arc-icon-theme
-    # arc-theme
-    # meslo-lgs-nf
-
-    # nur.repos.kira-bruneau.lightdm-webkit2-greeter
-
     neovim
     spacevim
     nano
@@ -185,11 +171,13 @@
     nixfmt
     du-dust
     home-manager
-    ulauncher
+    # ulauncher
     delta
     duf
     bottom
     gping
+    cached-nix-shell
+
     procs
     xclip
     copyq
@@ -202,38 +190,39 @@
     qview
     cinnamon.nemo
     hexyl
-    xfce.thunar
+    # xfce.thunar
     qpdfview
     brave
     okular
     strawberry
     qbittorrent
-    grub2
+    # grub2
     starship
     micro
     gnupg
-    sublime4-dev
+    sublime4
     terminator
     wezterm
     zoxide
     macchina
     freshfetch
     nitrogen
+    fsearch
     ranger
   ];
 
   # source https://discourse.nixos.org/t/ulauncher-and-the-debugging-journey/13141/5
-  systemd.user.services.ulauncher = {
-    enable = true;
-    description = "Start Ulauncher";
-    script = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
+  # systemd.user.services.ulauncher = {
+  #   enable = true;
+  #   description = "Start Ulauncher";
+  #   script = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
 
-    documentation = [
-      "https://github.com/Ulauncher/Ulauncher/blob/f0905b9a9cabb342f9c29d0e9efd3ba4d0fa456e/contrib/systemd/ulauncher.service"
-    ];
-    wantedBy = [ "graphical.target" "multi-user.target" ];
-    after = [ "display-manager.service" ];
-  };
+  #   documentation = [
+  #     "https://github.com/Ulauncher/Ulauncher/blob/f0905b9a9cabb342f9c29d0e9efd3ba4d0fa456e/contrib/systemd/ulauncher.service"
+  #   ];
+  #   wantedBy = [ "graphical.target" "multi-user.target" ];
+  #   after = [ "display-manager.service" ];
+  # };
 
   programs = {
     # gpg.enable = true;

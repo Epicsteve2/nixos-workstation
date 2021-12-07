@@ -20,12 +20,14 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   services.flameshot = { enable = true; };
-  gtk = { 
+  gtk = {
     enable = true;
     iconTheme.name = "Arc";
     iconTheme.package = pkgs.arc-icon-theme;
     theme.name = "Sweet-Dark";
     theme.package = pkgs.sweet;
+    # cursor.package = pkgs.capitaine-cursors;
+    # cursor.name = "Capitaine Cursors";
   };
 
   programs = {
@@ -38,7 +40,7 @@
         "update.mode" = "none";
         "editor.fontFamily" =
           "'FiraCode Nerd Font', 'MesloLGS Nerd Font', 'Monofur Nerd Font'";
-        "editor.formatOnPaste" = true;
+        # "editor.formatOnPaste" = true;
         "editor.formatOnType" = true;
         "workbench.colorTheme" = "Monokai";
         "explorer.sortOrder" = "modified";
@@ -87,6 +89,8 @@
   xsession.windowManager.i3 = {
     enable = true;
     config = {
+      workspaceLayout = "tabbed";
+
       # floating.modifier = "Mod4";
       modifier = "Mod4";
       fonts = {
@@ -113,11 +117,12 @@
           always = true;
           notification = false;
         }
+
       ];
       assigns = {
         "2: code" = [{ title = "Visual Studio Code"; }];
         # "1: code" = [{ title = "code"; }];
-        # "2: web" = [{ class = "^Brave-browser$"; }];
+        "3: web" = [{ class = "^Brave-browser$"; }];
         # "3: msg" = [{ class = "^Slack$"; } { class = "^discord$"; }];
         # "4: media" = [{ title = "^spt$"; }];
       };
@@ -138,5 +143,26 @@
       # Launch bar1 and bar2
       polybar top &
     '';
+    # config = {
+    #   "bar/top" = {
+    #     # monitor = "\${env:MONITOR:HDMI-0}";
+    #     width = "95%";
+    #     height = "3%";
+    #     modules-center = "date";
+    #     offset-x = 160;
+    #     offset-y = 8;
+    #     font-0 = "MesloLGS Nerd Font:size=10";
+    #     override-redirect = true;
+    #     wm-restack = "i3";
+    #     tray-transparent = false;
+    #   };
+    #   "module/date" = {
+    #     type = "internal/date";
+    #     internal = 5;
+    #     date = "%d.%m.%y";
+    #     time = "%H:%M";
+    #     label = "%time%  %date%";
+    #   };
+    # };
   };
 }

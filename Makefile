@@ -47,7 +47,7 @@ rebuild-switch:
 	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
 	@echo "$(CYAN)Copying current configurations...$(RESETCOLOR)"
 	@cp --verbose /etc/nixos/configuration.nix .current-configuration.nix || true
-	@delta .current-configuration.nix configuration.nix || true
+	@delta --paging never -- .current-configuration.nix configuration.nix || true
 	@echo "$(CYAN)Moving changed configurations...$(RESETCOLOR)"
 	@sudo cp --verbose configuration.nix /etc/nixos/configuration.nix || true
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
