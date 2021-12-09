@@ -1,23 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
+  imports = [ ./polybar.nix ./rofi.nix ./i3.nix ];
   home.username = "stephen";
   home.homeDirectory = "/home/stephen";
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "22.05";
   nixpkgs.config.allowUnfree = true;
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   services.flameshot = { enable = true; };
   gtk = {
@@ -49,6 +39,15 @@
         "terminal.integrated.fontFamily" = "MesloLGS Nerd Font";
         "editor.fontLigatures" = true;
         "workbench.sideBar.location" = "right";
+        "editor.cursorSmoothCaretAnimation" = true;
+        "editor.cursorBlinking" = "phase";
+        "editor.smoothScrolling" = true;
+        "workbench.list.smoothScrolling" = true;
+        "editor.scrollBeyondLastLine" = false;
+        "workbench.editor.enablePreview" = false;
+        "editor.minimap.renderCharacters" = false;
+        "editor.wordSeparators" =
+          ''`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?''; # no dash
       };
       # extensions = with pkgs.vscode-extensions; [
       #   usernamehw.errorlens
@@ -64,7 +63,7 @@
       enable = true;
       settings = {
         working_directory = "/home/stephen/code-monkey/nixos-workstation";
-        background_opacity = 1;
+        background_opacity = 0.86;
         font = {
           size = 14;
           normal = {
@@ -77,92 +76,48 @@
         window = { dynamic_title = true; };
       };
     };
-    rofi = {
-      enable = true;
-      font = "MesloLGS Nerd Font 14";
-      terminal = "${pkgs.alacritty}/bin/alacritty";
-      location = "center";
-    };
-
   };
   xsession.enable = true;
-  xsession.windowManager.i3 = {
-    enable = true;
-    config = {
-      workspaceLayout = "tabbed";
+  
 
-      # floating.modifier = "Mod4";
-      modifier = "Mod4";
-      fonts = {
-        names = [ "MesloLGS Nerd Font" ];
-        size = 14.0;
-      };
-      keybindings =
-        let modifier = config.xsession.windowManager.i3.config.modifier;
-        in lib.mkOptionDefault {
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
-          "${modifier}+q" = "kill";
-          "${modifier}+space" = "floating toggle";
-          "${modifier}+d" =
-            ''exec "${pkgs.rofi}/bin/rofi -modi drun,run -show drun"'';
-        };
-      startup = [
-        {
-          command = "systemctl --user restart polybar.service";
-          always = true;
-          notification = false;
-        }
-        {
-          command = "${pkgs.nitrogen}/bin/nitrogen --restore";
-          always = true;
-          notification = false;
-        }
-
-      ];
-      assigns = {
-        "2: code" = [{ title = "Visual Studio Code"; }];
-        # "1: code" = [{ title = "code"; }];
-        "3: web" = [{ class = "^Brave-browser$"; }];
-        # "3: msg" = [{ class = "^Slack$"; } { class = "^discord$"; }];
-        # "4: media" = [{ title = "^spt$"; }];
-      };
-    };
-  };
-  services.polybar = {
+  services.picom = {
     enable = true;
-    script = ''
-      # Terminate already running bar instances
-      # killall -q polybar
-      # killall doesn't seem to kill the scripts started by the bar.
-      # So, the following ways work better
-      # kill $(ps aux | grep 'polybar' | awk '{print $2}')  >/dev/null 2>&1
-      kill -9 $(pgrep -f 'polybar') >/dev/null 2>&1
-      polybar-msg cmd quit >/dev/null 2>&1
-      # Wait until the processes have been shut down
-      while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-      # Launch bar1 and bar2
-      polybar top &
+    # package = pkgs.callPackage ../packages/compton-unstable.nix { };
+    # experimentalBackends = true;
+
+    blur = true;
+    blurExclude = [ "window_type = 'dock'" "window_type = 'desktop'" ];
+
+    fade = true;
+    fadeDelta = 5;
+
+    shadow = true;
+    shadowOffsets = [ (-7) (-7) ];
+    shadowOpacity = "0.7";
+    shadowExclude = [ "window_type *= 'normal' && ! name ~= ''" ];
+    noDockShadow = true;
+    noDNDShadow = true;
+
+    activeOpacity = "1.0";
+    inactiveOpacity = "0.8";
+    menuOpacity = "0.8";
+
+    backend = "glx";
+    vSync = true;
+
+    extraOptions = ''
+      shadow-radius = 7;
+      clear-shadow = true;
+      frame-opacity = 0.7;
+      blur-method = "dual_kawase";
+      blur-strength = 5;
+      alpha-step = 0.06;
+      detect-client-opacity = true;
+      detect-rounded-corners = true;
+      paint-on-overlay = true;
+      detect-transient = true;
+      mark-wmwin-focused = true;
+      mark-ovredir-focused = true;
     '';
-    # config = {
-    #   "bar/top" = {
-    #     # monitor = "\${env:MONITOR:HDMI-0}";
-    #     width = "95%";
-    #     height = "3%";
-    #     modules-center = "date";
-    #     offset-x = 160;
-    #     offset-y = 8;
-    #     font-0 = "MesloLGS Nerd Font:size=10";
-    #     override-redirect = true;
-    #     wm-restack = "i3";
-    #     tray-transparent = false;
-    #   };
-    #   "module/date" = {
-    #     type = "internal/date";
-    #     internal = 5;
-    #     date = "%d.%m.%y";
-    #     time = "%H:%M";
-    #     label = "%time%  %date%";
-    #   };
-    # };
   };
 }

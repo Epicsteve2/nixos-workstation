@@ -26,9 +26,17 @@ home-manager-switch:
 	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
 	@echo "$(CYAN)Copying current home...$(RESETCOLOR)"
 	@cp --verbose $${HOME}/.config/nixpkgs/home.nix .current-home.nix || true
+	@cp --verbose $${HOME}/.config/nixpkgs/rofi.nix .current-rofi.nix || true
+	@cp --verbose $${HOME}/.config/nixpkgs/polybar.nix .current-polybar.nix || true
 	@delta --paging never -- .current-home.nix home.nix || true
+	@delta --paging never -- .current-rofi.nix rofi.nix || true
+	@delta --paging never -- .current-polybar.nix polybar.nix || true
+	@delta --paging never -- .current-i3.nix i3.nix || true
 	@echo "$(CYAN)Moving changed home...$(RESETCOLOR)"
 	@cp --verbose home.nix $${HOME}/.config/nixpkgs/home.nix || true
+	@cp --verbose rofi.nix $${HOME}/.config/nixpkgs/rofi.nix || true
+	@cp --verbose polybar.nix $${HOME}/.config/nixpkgs/polybar.nix || true
+	@cp --verbose i3.nix $${HOME}/.config/nixpkgs/i3.nix || true
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
 	@home-manager -b backup switch
 
@@ -37,6 +45,9 @@ home-manager-fail:
 	@echo
 	@echo "$(RED)home-manager-fail$(RESETCOLOR)"
 	@cp --verbose .current-home.nix $${HOME}/.config/nixpkgs/home.nix
+	@cp --verbose .current-rofi.nix $${HOME}/.config/nixpkgs/rofi.nix
+	@cp --verbose .current-polybar.nix $${HOME}/.config/nixpkgs/polybar.nix
+	@cp --verbose .current-i3.nix $${HOME}/.config/nixpkgs/i3.nix
 
 .PHONY: rebuild
 rebuild:

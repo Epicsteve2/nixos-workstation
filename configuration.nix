@@ -75,22 +75,23 @@
     displayManager = {
       lightdm = {
         enable = true;
-        greeters.gtk = {
-          enable = true;
-          theme.name = "Sweet-Dark";
-          theme.package = pkgs.sweet;
-          iconTheme.name = "Arc";
-          iconTheme.package = pkgs.arc-icon-theme;
-          # Really weird bug? idk man
-          extraConfig = "";
-        };
-        background =
-          builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
+        # greeters.gtk = {
+        #   enable = true;
+        #   theme.name = "Sweet-Dark";
+        #   theme.package = pkgs.sweet;
+        #   iconTheme.name = "Arc";
+        #   iconTheme.package = pkgs.arc-icon-theme;
+        #   # Really weird bug? idk man
+        #   extraConfig = "";
+        # };
+        # background =
+        #   builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
 
         # So close! doesn't work tho
-        # greeter.package = pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
-        # greeter.name = "lightdm-webkit2-greeter";
-        # greeter.enable = true;
+        greeter.package =
+          pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
+        greeter.name = "lightdm-webkit2-greeter";
+        greeter.enable = true;
         # extraConfig = "";
       };
       defaultSession = "none+i3";
@@ -100,21 +101,7 @@
       };
     };
 
-    desktopManager = {
-      cinnamon.enable = true;
-      xterm.enable = false;
-    };
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu # application launcher most people use
-        rofi
-        i3status # gives you the default i3 status bar
-        polybar
-        i3lock # default i3 screen locker
-        i3blocks # if you are planning on using i3blocks over i3status
-      ];
-    };
+    windowManager.i3 = { enable = true; };
   };
 
   # Enable sound.
@@ -153,10 +140,12 @@
     wget
     firefox
     zsh
+    dconf
     git
     zip
     gparted
     unzip
+    sxiv
     gnumake
     exa
     htop
@@ -190,9 +179,13 @@
     qview
     cinnamon.nemo
     hexyl
-    # xfce.thunar
+    xfce.thunar
+    neovide
+    pcmanfm
     qpdfview
     brave
+    numlockx
+    picom
     okular
     strawberry
     qbittorrent
@@ -225,11 +218,6 @@
   # };
 
   programs = {
-    # gpg.enable = true;
-    # exa.enable = true;
-    # fzf.enable = true;
-    # home-manager.enable = true;
-    # zoxide.enable = true;
     htop = {
       settings = {
         sort_direction = true;
