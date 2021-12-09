@@ -28,9 +28,10 @@
       efiInstallAsRemovable = true;
       gfxmodeEfi = "1920x1080";
       gfxmodeBios = "1920x1080";
+      # fixed cuz https://github.com/chickazee4/mynix
+      theme = "/boot/grub/themes/Nakano_Miku/Miku";
       # extraConfig = "set theme=${pkgs.libsForQt5.breeze-grub}/grub/themes/breeze/theme.txt";
 
-      # theme = pkgs.libsForQt5.breeze-grub;
       #extraConfig = "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
       extraEntries = ''
         menuentry "Reboot" {
@@ -75,23 +76,23 @@
     displayManager = {
       lightdm = {
         enable = true;
-        # greeters.gtk = {
-        #   enable = true;
-        #   theme.name = "Sweet-Dark";
-        #   theme.package = pkgs.sweet;
-        #   iconTheme.name = "Arc";
-        #   iconTheme.package = pkgs.arc-icon-theme;
-        #   # Really weird bug? idk man
-        #   extraConfig = "";
-        # };
-        # background =
-        #   builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
+        greeters.gtk = {
+          enable = true;
+          theme.name = "Sweet-Dark";
+          theme.package = pkgs.sweet;
+          iconTheme.name = "Arc";
+          iconTheme.package = pkgs.arc-icon-theme;
+          # Really weird bug? idk man
+          extraConfig = "";
+        };
+        background =
+          builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
 
         # So close! doesn't work tho
-        greeter.package =
-          pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
-        greeter.name = "lightdm-webkit2-greeter";
-        greeter.enable = true;
+        # greeter.package =
+        #   pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
+        # greeter.name = "lightdm-webkit2-greeter";
+        # greeter.enable = true;
         # extraConfig = "";
       };
       defaultSession = "none+i3";

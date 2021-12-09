@@ -6,8 +6,8 @@
     package = pkgs.i3-gaps;
     config = {
       gaps = {
-        inner = 5;
-        outer = 5;
+        inner = 6;
+        outer = 3;
       };
       workspaceLayout = "tabbed";
 

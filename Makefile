@@ -2,7 +2,6 @@ SHELL := $(shell which bash)
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
 
-
 RED := $(shell tput setaf 1)
 GREEN := $(shell tput setaf 2)
 YELLOW := $(shell tput setaf 3)
@@ -11,32 +10,34 @@ MAGENTA := $(shell tput setaf 5)
 CYAN := $(shell tput setaf 6)
 RESETCOLOR := $(shell tput sgr0)
 
+HOME_FILES := home rofi polybar i3 alacritty picom vscode
+
 .PHONY: help ## Show this help
 help:
 	@grep -E '^\.PHONY: [a-zA-Z_-]+ .*?## .*$$' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = "(: |##)"}; {printf "$(CYAN) %-30s$(RESETCOLOR) %s\n", $$2, $$3}' \
 		| less --chop-long-lines --RAW-CONTROL-CHARS
 
-.PHONY: home-manager ## Prints a diff of home-manager changes, then 
+.PHONY: home-manager ## Prints a diff of home-manager changes, then switches
 home-manager:
 	@$(MAKE) home-manager-switch || $(MAKE) home-manager-fail
 
-.PHONY: home-manager-switch
+.PHONY: home-manager-switch ## Copy current files to ~/.config/nixpkgs, then switches
 home-manager-switch:
 	@echo "$(GREEN)rebuild-switch$(RESETCOLOR)"
 	@echo "$(CYAN)Copying current home...$(RESETCOLOR)"
-	@cp --verbose $${HOME}/.config/nixpkgs/home.nix .current-home.nix || true
-	@cp --verbose $${HOME}/.config/nixpkgs/rofi.nix .current-rofi.nix || true
-	@cp --verbose $${HOME}/.config/nixpkgs/polybar.nix .current-polybar.nix || true
-	@delta --paging never -- .current-home.nix home.nix || true
-	@delta --paging never -- .current-rofi.nix rofi.nix || true
-	@delta --paging never -- .current-polybar.nix polybar.nix || true
-	@delta --paging never -- .current-i3.nix i3.nix || true
+	@for FILE in $(HOME_FILES); do \
+		cp --verbose $${HOME}/.config/nixpkgs/$${FILE}.nix .current-$${FILE}.nix || true; \
+	done
+	@for FILE in $(HOME_FILES); do \
+		delta --paging never -- .current-$${FILE}.nix $${FILE}.nix || true; \
+	done
+
 	@echo "$(CYAN)Moving changed home...$(RESETCOLOR)"
-	@cp --verbose home.nix $${HOME}/.config/nixpkgs/home.nix || true
-	@cp --verbose rofi.nix $${HOME}/.config/nixpkgs/rofi.nix || true
-	@cp --verbose polybar.nix $${HOME}/.config/nixpkgs/polybar.nix || true
-	@cp --verbose i3.nix $${HOME}/.config/nixpkgs/i3.nix || true
+	@for FILE in $(HOME_FILES); do \
+		cp --verbose $${FILE}.nix $${HOME}/.config/nixpkgs/$${FILE}.nix || true; \
+	done
+
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
 	@home-manager -b backup switch
 
@@ -44,10 +45,9 @@ home-manager-switch:
 home-manager-fail:
 	@echo
 	@echo "$(RED)home-manager-fail$(RESETCOLOR)"
-	@cp --verbose .current-home.nix $${HOME}/.config/nixpkgs/home.nix
-	@cp --verbose .current-rofi.nix $${HOME}/.config/nixpkgs/rofi.nix
-	@cp --verbose .current-polybar.nix $${HOME}/.config/nixpkgs/polybar.nix
-	@cp --verbose .current-i3.nix $${HOME}/.config/nixpkgs/i3.nix
+	@for FILE in $(HOME_FILES); do \
+		cp --verbose .current-$${FILE}.nix $${HOME}/.config/nixpkgs/$${FILE}.nix || true; \
+	done
 
 .PHONY: rebuild
 rebuild:
