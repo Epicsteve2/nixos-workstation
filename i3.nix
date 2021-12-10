@@ -34,7 +34,9 @@
 
           "${modifier}+Shift+e" = "exec ~/.config/i3/scripts/powermenu";
           "Print" = "exec flameshot gui";
+          "${modifier}+Shift+v" = "exec copyq toggle";
         };
+      floating = { criteria = [{ title = "CopyQ"; }]; };
       startup = [
         {
           command = "systemctl --user restart polybar.service";
@@ -60,6 +62,19 @@
           command = "${pkgs.picom}/bin/picom -CGb";
           always = true;
           notification = false;
+        }
+        {
+          command = "${pkgs.copyq}/bin/copyq";
+          always = true;
+          notification = false;
+        }
+        {
+          command = "--no-startup-id code";
+          always = true;
+        }
+        {
+          command = "--no-startup-id alacritty";
+          always = true;
         }
 
       ];

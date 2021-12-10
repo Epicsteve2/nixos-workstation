@@ -10,7 +10,7 @@ MAGENTA := $(shell tput setaf 5)
 CYAN := $(shell tput setaf 6)
 RESETCOLOR := $(shell tput sgr0)
 
-HOME_FILES := home rofi polybar i3 alacritty picom vscode
+HOME_FILES := home rofi polybar i3 alacritty picom vscode dunst
 
 .PHONY: help ## Show this help
 help:

@@ -1,10 +1,17 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }:
+
+let
+  nur-no-pkgs = import (builtins.fetchTarball
+    "https://github.com/nix-community/NUR/archive/master.tar.gz") { };
+  # lightdm-aether = 
+in {
   imports = [ # Include the results of the hardware scan.
     <home-manager/nixos>
     ./hardware-configuration.nix
+    nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
   ];
   nixpkgs.config.packageOverrides = pkgs: {
     nur = import (builtins.fetchTarball
@@ -20,7 +27,7 @@
     efi.canTouchEfiVariables = false;
     timeout = 10;
     grub = {
-      devices = [ "nodev" ];
+      device = "nodev";
       version = 2;
       enable = true;
       default = "saved";
@@ -74,32 +81,57 @@
     layout = "us";
 
     displayManager = {
-      lightdm = {
-        enable = true;
-        greeters.gtk = {
-          enable = true;
-          theme.name = "Sweet-Dark";
-          theme.package = pkgs.sweet;
-          iconTheme.name = "Arc";
-          iconTheme.package = pkgs.arc-icon-theme;
-          # Really weird bug? idk man
-          extraConfig = "";
-        };
-        background =
-          builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
+      # lightdm = {
+      #   enable = true;
+      #   # greeters.gtk = {
+      #   #   enable = true;
+      #   #   theme.name = "Sweet-Dark";
+      #   #   theme.package = pkgs.sweet;
+      #   #   iconTheme.name = "Arc";
+      #   #   iconTheme.package = pkgs.arc-icon-theme;
+      #   #   # Really weird bug? idk man
+      #   #   extraConfig = "";
+      #   # };
+      #   # background =
+      #   #   builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
 
-        # So close! doesn't work tho
-        # greeter.package =
-        #   pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
-        # greeter.name = "lightdm-webkit2-greeter";
-        # greeter.enable = true;
-        # extraConfig = "";
-      };
-      defaultSession = "none+i3";
-      autoLogin = {
+      #   # So close! doesn't work tho 
+      #   #libEGL warning: DRI2: failed to authenticate
+      #   greeter.package =
+      #     pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters;
+      #   greeter.name = "lightdm-webkit2-greeter";
+      #   greeter.enable = true;
+      #   extraConfig = "";
+      # };
+
+      # lightdm = {
+      #   enable = true;
+      #   greeters.webkit2 = {
+      #     enable = true;
+      #     webkitTheme = pkgs.fetchFromGitHub {
+      #       owner = "NoiSek";
+      #       repo = "Aether";
+      #       rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
+      #       sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
+      #     };
+      #     # branding = {
+      #     #   backgroundImages = "/usr/share/backgrounds";
+      #     # };
+      #     # webkitTheme =
+      #     #   pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
+      #   };
+      # };
+
+      sddm = {
         enable = true;
-        user = "stephen";
+        theme = "clairvoyance";
       };
+
+      defaultSession = "none+i3";
+      # autoLogin = {
+      #   enable = true;
+      #   user = "stephen";
+      # };
     };
 
     windowManager.i3 = { enable = true; };
@@ -139,6 +171,7 @@
     nano
     xorg.xkill
     wget
+    zathura
     firefox
     zsh
     dconf
@@ -148,6 +181,8 @@
     unzip
     sxiv
     gnumake
+    # pkgs.nur.repos.kira-bruneau.themes.sddm.clairvoyance
+    #pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters
     exa
     htop
     neofetch

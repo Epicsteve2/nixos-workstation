@@ -52,7 +52,7 @@ in {
         fixed-center = true;
 
         width = "100%";
-        height = 19;
+        height = 25;
         offset-x = "1%";
 
         scroll-up = "i3wm-wsnext";
@@ -63,8 +63,8 @@ in {
 
         radius = 0;
 
-        font-0 = "FuraCode Nerd Font:size=12;3";
-        font-1 = "FuraCode Nerd Font:style=Bold:size=12;3";
+        font-0 = "MesloLGS Nerd Font:size=16;3";
+        font-1 = "MesloLGS Nerd Font:style=Bold:size=16;3";
 
         modules-left = "distro-icon dulS ddrT i3 dulT";
         modules-center = "title";
@@ -78,7 +78,7 @@ in {
         fixed-center = true;
 
         width = "100%";
-        height = 19;
+        height = 25;
 
         offset-x = "1%";
 
@@ -97,8 +97,8 @@ in {
         tray-scale = 1;
         padding = 0;
 
-        font-0 = "FuraCode Nerd Font:size=12;3";
-        font-1 = "FuraCode Nerd Font:style=Bold:size=12;3";
+        font-0 = "MesloLGS Nerd Font:size=16;3";
+        font-1 = "MesloLGS Nerd Font:style=Bold:size=16;3";
 
         modules-left = "powermenu ddlS";
 
@@ -356,9 +356,9 @@ in {
         menu-0-0 = " Suspend";
         menu-0-0-exec = "systemctl suspend";
         menu-0-1 = " Reboot";
-        menu-0-1-exec = "v";
+        menu-0-1-exec = "reboot";
         menu-0-2 = " Shutdown";
-        menu-0-2-exec = "systemctl poweroff";
+        menu-0-2-exec = "shutdown now";
       };
 
       #"module/wireless-network" = {
