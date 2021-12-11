@@ -142,10 +142,10 @@ in {
       };
 
       defaultSession = "none+i3";
-      # autoLogin = {
-      #   enable = true;
-      #   user = "stephen";
-      # };
+      autoLogin = {
+        enable = false;
+        user = "stephen";
+      };
     };
 
     windowManager.i3 = { enable = true; };
@@ -208,6 +208,10 @@ in {
     #SDDM
     libsForQt5.qt5.qtgraphicaleffects
     nur.repos.alarsyo.sddm-sugar-candy
+
+    kalker
+    rnix-lsp # language server for nix
+    nodePackages.insect
 
     exa
     htop

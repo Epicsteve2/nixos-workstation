@@ -36,12 +36,15 @@
       # package = pkgs.gnome3.adwaita-icon-theme;
       name = "Papirus";
       package = pkgs.papirus-icon-theme;
+      # name = "Tela";
+      # package = pkgs.tela-icon-theme;
     };
     theme = {
-      # name = "Adwaita-dark";
-      # # package = pkgs.adwaita;
-      name = "Sweet-Dark";
-      package = pkgs.sweet;
+      name = "Adwaita-dark";
+      package = pkgs.gnome3.gnome_themes_standard;
+      # package = pkgs.gnome.adwaita-icon-theme; #! Don't think we need
+      # name = "Sweet-Dark";
+      # package = pkgs.sweet;
     };
 
     # gtk3.extraConfig = {
@@ -70,15 +73,15 @@
       package = pkgs.adwaita-qt;
       name = "adwaita-dark";
     };
-
   };
   xsession = {
     enable = true;
     pointerCursor = {
-      # package = pkgs.capitaine-cursors;
-      # name = "capitaine-cursors";
+      size = 40;
       package = pkgs.nur.repos.ambroisie.vimix-cursors;
       name = "Vimix-white-cursors";
+      # package = pkgs.capitaine-cursors;
+      # name = "capitaine-cursors";
       # name = "Vimix-cursors";
       # package = pkgs.nur.repos.ambroisie.volantes-cursors;
       # name = "volantes_light_cursors";
@@ -86,7 +89,6 @@
       # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
       # # Theres a lot of letters lol
       # name = "LyraF-cursors";
-      size = 40;
     };
   };
   # xsession.enable = true;

@@ -28,6 +28,7 @@
       "editor.minimap.renderCharacters" = false;
       # "editor.wordSeparators" =
       #   ''`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?''; # no dash
+      "nix.enableLanguageServer" = true;
     };
     # extensions = with pkgs.vscode-extensions; [
     #   usernamehw.errorlens
