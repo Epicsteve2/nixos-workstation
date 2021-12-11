@@ -3,8 +3,8 @@
 {
   services.picom = {
     enable = true;
+    experimentalBackends = true;
     # package = pkgs.callPackage ../packages/compton-unstable.nix { };
-    # experimentalBackends = true;
 
     blur = true;
     blurExclude = [ "window_type = 'dock'" "window_type = 'desktop'" ];
@@ -19,7 +19,7 @@
     noDockShadow = true;
     noDNDShadow = true;
 
-    activeOpacity = "1.0";
+    activeOpacity = "0.86";
     inactiveOpacity = "0.8";
     menuOpacity = "0.8";
 

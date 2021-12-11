@@ -11,8 +11,10 @@
     ./dunst.nix
   ];
   nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball
-      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+    nur = import
+      (builtins.fetchTarball
+        "https://github.com/nix-community/NUR/archive/master.tar.gz")
+      {
         inherit pkgs;
       };
   };
@@ -24,25 +26,38 @@
 
   programs.home-manager.enable = true;
   # Unfortunately. saving to different file seems to not work...
-  services.flameshot = { enable = true; };
+  services.flameshot = {
+    enable = true;
+    settings = {
+      General = {
+        # # Probably some way to do this lol. I'm just bad at nix
+        # savePath = builtins.concatStringsSep  builtins.getEnv "HOME";
+        savePath = builtins.getEnv "HOME";
+        savePathFixed = true;
+        # hardcoded...
+        ignoreUpdateToVersion = "0.10.1";
+      };
+      Shortcuts = {
+        TYPE_SAVE = "Ctrl+S";
+        TYPE_COPY = "Ctrl+C";
+      };
+    };
+  };
   gtk = {
     enable = true;
-    # iconTheme.name = "Arc";
-    # iconTheme.package = pkgs.arc-icon-theme;
     iconTheme = {
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
       # name = "Arc";
       # package = pkgs.arc-icon-theme;
       # name = "Adwaita";
       # package = pkgs.gnome3.adwaita-icon-theme;
-      name = "Papirus";
-      package = pkgs.papirus-icon-theme;
       # name = "Tela";
       # package = pkgs.tela-icon-theme;
     };
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome3.gnome_themes_standard;
-      # package = pkgs.gnome.adwaita-icon-theme; #! Don't think we need
       # name = "Sweet-Dark";
       # package = pkgs.sweet;
     };
@@ -61,9 +76,6 @@
     # gtk-xft-hinting = 1;
     # gtk-xft-hintstyle = "hintfull";
     # };
-
-    # cursor.package = pkgs.capitaine-cursors;
-    # cursor.name = "Capitaine Cursors";
   };
 
   qt = {
@@ -80,17 +92,19 @@
       size = 40;
       package = pkgs.nur.repos.ambroisie.vimix-cursors;
       name = "Vimix-white-cursors";
+      # name = "Vimix-cursors";
+
       # package = pkgs.capitaine-cursors;
       # name = "capitaine-cursors";
-      # name = "Vimix-cursors";
+
       # package = pkgs.nur.repos.ambroisie.volantes-cursors;
       # name = "volantes_light_cursors";
       # name = "volantes_cursors";
-      # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
+
       # # Theres a lot of letters lol
+      # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
       # name = "LyraF-cursors";
     };
   };
-  # xsession.enable = true;
   # home.packages = with pkgs; [ arc-theme breeze-icons capitaine-cursors ];
 }

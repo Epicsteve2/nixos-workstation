@@ -3,24 +3,26 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, pkgs, lib, ... }:
 let
-  nur-no-pkgs = import (builtins.fetchTarball
-    "https://github.com/nix-community/NUR/archive/master.tar.gz") { };
-  # iniFmt = pkgs.formats.ini { };
-in {
-  imports = [ # Include the results of the hardware scan.
+  nur-no-pkgs = import
+    (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/master.tar.gz")
+    { };
+in
+{
+  imports = [
     <home-manager/nixos>
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
   ];
   nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball
-      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+    nur = import
+      (builtins.fetchTarball
+        "https://github.com/nix-community/NUR/archive/master.tar.gz")
+      {
         inherit pkgs;
       };
   };
-
-  #boot.initrd.enable = false;
-  #boot.initrd.verbose = false;
 
   nix = {
     package = pkgs.nixFlakes;
@@ -132,12 +134,15 @@ in {
         # theme = "minimal-sddm-theme";
         # theme = "sddm-chili";
 
-        # This doesn't work? and there's 0 documentation >:/
-        # settings = iniFmt.generate "sddm.conf" {
-        #   ScreenWidth = 1920;
-        #   ScreenHeight = 1080;
-        #   Background = "/usr/share/backgrounds/1172141.png";
-        #   FormPosition = "right";
+        # settings = {
+        #   General = {
+        #     Background = "/usr/share/backgrounds/1172141.png";
+        #   };
+        #   # Theme = {
+        #   #   ScreenWidth = 1920;
+        #   # ScreenHeight = 1080;
+        #   # FormPosition = "right";
+        #   # };
         # };
       };
 
@@ -148,6 +153,9 @@ in {
       };
     };
 
+    desktopManager.cinnamon = {
+      enable = true;
+    };
     windowManager.i3 = { enable = true; };
   };
 
@@ -173,34 +181,48 @@ in {
   };
 
   security.sudo.wheelNeedsPassword = false;
-  # users.users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.zsh;
 
   nixpkgs.config.allowUnfree = true;
-  # List packages installed in system profile. To search, run:
-  #   $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
     spacevim
     nano
-    xorg.xkill
-    peek
-    wget
+
     zathura
-    firefox
-    # haskellPackages.kmonad
-    zsh
+
+    xorg.xkill
+    lxappearance # Program that manages themeing
+    networkmanagerapplet # GUI for networking
     dconf
+    gparted
+    peek
+
+    rnix-lsp # language server for nix
+    zsh
     git
     zip
     cht-sh
     feh
-    gparted
-    # breeze-qt5 # Breeze theme for qt5 (cursors!)
-    lxappearance # Program that manages themeing
-    networkmanagerapplet # GUI for networking
+    wget
     unzip
     sxiv
     gnumake
+    exa
+    htop
+    neofetch
+    ripgrep
+    fd
+    bat
+    fzf
+    nixfmt
+
+    xorg.xev
+    font-manager
+    copyq
+    firefox
+    # haskellPackages.kmonad
+    # breeze-qt5 # Breeze theme for qt5 (cursors!)
 
     nur.repos.kira-bruneau.themes.sddm.clairvoyance
     nur.repos.suhr.minimal-sddm-theme
@@ -210,20 +232,12 @@ in {
     nur.repos.alarsyo.sddm-sugar-candy
 
     kalker
-    rnix-lsp # language server for nix
     nodePackages.insect
 
-    exa
-    htop
-    neofetch
-    ripgrep
-    fd
-    bat
-    fzf
-    alacritty
+
     tealdeer
+    alacritty
     vscode
-    nixfmt
     du-dust
     home-manager
     # ulauncher
@@ -233,14 +247,12 @@ in {
     gping
     cached-nix-shell
 
+
     procs
     xclip
-    copyq
-    font-manager
     mpv
     any-nix-shell
     killall
-    xorg.xev
     nomacs
     qview
     cinnamon.nemo

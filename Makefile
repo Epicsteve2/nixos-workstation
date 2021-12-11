@@ -39,7 +39,7 @@ home-manager-switch:
 	done
 
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
-	@home-manager -b backup switch
+	@home-manager -b backup3d switch
 
 .PHONY: home-manager-fail
 home-manager-fail:
