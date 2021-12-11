@@ -20,11 +20,16 @@ in {
       };
   };
 
+  #boot.initrd.enable = false;
+  #boot.initrd.verbose = false;
+
   boot.loader = {
     # # Use the systemd-boot EFI boot loader.
     # probably VM's only
-    systemd-boot.enable = false;
-    efi.canTouchEfiVariables = false;
+    # systemd-boot.consoleMode = "max";
+    # systemd-boot.editor = false;
+    # systemd-boot.enable = false; # default
+    # efi.canTouchEfiVariables = false; # default
     timeout = 10;
     grub = {
       device = "nodev";
@@ -32,7 +37,7 @@ in {
       enable = true;
       default = "saved";
       efiSupport = true;
-      efiInstallAsRemovable = true;
+      efiInstallAsRemovable = true; # idk what this does lol
       gfxmodeEfi = "1920x1080";
       gfxmodeBios = "1920x1080";
       # fixed cuz https://github.com/chickazee4/mynix
@@ -104,34 +109,37 @@ in {
       #   extraConfig = "";
       # };
 
-      # lightdm = {
-      #   enable = true;
+      #lightdm = {
+      #  enable = true;
       #   greeters.webkit2 = {
-      #     enable = true;
-      #     webkitTheme = pkgs.fetchFromGitHub {
-      #       owner = "NoiSek";
-      #       repo = "Aether";
-      #       rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
-      #       sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
-      #     };
-      #     # branding = {
-      #     #   backgroundImages = "/usr/share/backgrounds";
-      #     # };
-      #     # webkitTheme =
-      #     #   pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
-      #   };
+      #      enable = true;
+      # webkitTheme = pkgs.fetchFromGitHub {
+      #   owner = "NoiSek";
+      #   repo = "Aether";
+      #   rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
+      #   sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
       # };
+      # branding = {
+      #   backgroundImages = "/usr/share/backgrounds";
+      # };
+      # webkitTheme =
+      #    pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
+      # };
+      #};
 
       sddm = {
         enable = true;
-        theme = "clairvoyance";
+        # theme = "sugar-candy";
+        # theme = "clairvoyance";
+        # theme = "minimal-sddm-theme";
+        theme = "chili";
       };
 
       defaultSession = "none+i3";
-      # autoLogin = {
-      #   enable = true;
-      #   user = "stephen";
-      # };
+      autoLogin = {
+        enable = true;
+        user = "stephen";
+      };
     };
 
     windowManager.i3 = { enable = true; };
@@ -181,8 +189,14 @@ in {
     unzip
     sxiv
     gnumake
-    # pkgs.nur.repos.kira-bruneau.themes.sddm.clairvoyance
-    #pkgs.nur.repos.kira-bruneau.lightdm-webkit2-greeter.xgreeters
+
+    nur.repos.kira-bruneau.themes.sddm.clairvoyance
+    nur.repos.suhr.minimal-sddm-theme
+    nur.repos.dan4ik605743.sddm-chili
+    #SDDM
+    libsForQt5.qt5.qtgraphicaleffects
+    nur.repos.alarsyo.sddm-sugar-candy
+
     exa
     htop
     neofetch

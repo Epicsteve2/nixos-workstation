@@ -17,6 +17,7 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.home-manager.enable = true;
+  # Unfortunately. saving to different file seems to not work...
   services.flameshot = { enable = true; };
   gtk = {
     enable = true;

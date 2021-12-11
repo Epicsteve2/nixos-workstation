@@ -62,7 +62,7 @@ rebuild-switch:
 	@echo "$(CYAN)Moving changed configurations...$(RESETCOLOR)"
 	@sudo cp --verbose configuration.nix /etc/nixos/configuration.nix || true
 	@echo "$(CYAN)Rebuilding...$(RESETCOLOR)"
-	@sudo nixos-rebuild switch
+	@sudo nixos-rebuild switch # --install-bootloader
 
 .PHONY: rebuild-fail
 rebuild-fail:
