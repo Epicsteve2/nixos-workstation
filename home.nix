@@ -10,6 +10,12 @@
     ./alacritty.nix
     ./dunst.nix
   ];
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball
+      "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+        inherit pkgs;
+      };
+  };
   home.username = "stephen";
   home.homeDirectory = "/home/stephen";
 
@@ -38,21 +44,21 @@
       package = pkgs.sweet;
     };
 
-    gtk3.extraConfig = {
-      # gtk-application-prefer-dark-theme = 0;
-      gtk-cursor-theme-name = "Adwaita";
-      # gtk-cursor-theme-size = 0;
-      # gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
-      # gtk-toolbar-icon-size =
-      #   "GTK_ICON_SIZE_LARGE_TOOLBAR"; # gtk-button-images = 1;
-      # gtk-menu-images = 0;
-      # gtk-enable-event-sounds = 1;
-      # gtk-enable-input-feedback-sounds = 1;
-      # gtk-xft-antialias = 1;
-      # gtk-xft-hinting = 1;
-      # gtk-xft-hintstyle = "hintfull";
+    # gtk3.extraConfig = {
+    # gtk-application-prefer-dark-theme = 0;
+    # gtk-cursor-theme-name = "Adwaita";
+    # gtk-cursor-theme-size = 0;
+    # gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
+    # gtk-toolbar-icon-size =
+    #   "GTK_ICON_SIZE_LARGE_TOOLBAR"; # gtk-button-images = 1;
+    # gtk-menu-images = 0;
+    # gtk-enable-event-sounds = 1;
+    # gtk-enable-input-feedback-sounds = 1;
+    # gtk-xft-antialias = 1;
+    # gtk-xft-hinting = 1;
+    # gtk-xft-hintstyle = "hintfull";
+    # };
 
-    };
     # cursor.package = pkgs.capitaine-cursors;
     # cursor.name = "Capitaine Cursors";
   };
@@ -64,7 +70,25 @@
       package = pkgs.adwaita-qt;
       name = "adwaita-dark";
     };
+
   };
-  xsession.enable = true;
+  xsession = {
+    enable = true;
+    pointerCursor = {
+      # package = pkgs.capitaine-cursors;
+      # name = "capitaine-cursors";
+      package = pkgs.nur.repos.ambroisie.vimix-cursors;
+      name = "Vimix-white-cursors";
+      # name = "Vimix-cursors";
+      # package = pkgs.nur.repos.ambroisie.volantes-cursors;
+      # name = "volantes_light_cursors";
+      # name = "volantes_cursors";
+      # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
+      # # Theres a lot of letters lol
+      # name = "LyraF-cursors";
+      size = 40;
+    };
+  };
+  # xsession.enable = true;
   home.packages = with pkgs; [ arc-theme breeze-icons capitaine-cursors ];
 }
