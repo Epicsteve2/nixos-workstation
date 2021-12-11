@@ -90,5 +90,5 @@
     };
   };
   # xsession.enable = true;
-  home.packages = with pkgs; [ arc-theme breeze-icons capitaine-cursors ];
+  # home.packages = with pkgs; [ arc-theme breeze-icons capitaine-cursors ];
 }

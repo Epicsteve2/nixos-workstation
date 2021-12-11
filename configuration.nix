@@ -454,7 +454,6 @@ in {
       #   setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
       #   setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
-
       #   zstyle ':completion:*:git-checkout:*' sort false
       #   # set list-colors to enable filename colorizing
       #   zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
