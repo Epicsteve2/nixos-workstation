@@ -3,6 +3,9 @@
 {
   programs.vscode = {
     enable = true;
+    # Should do
+    #userSettings = builtins.fromJSON (builtins.readFile ./settings.json);
+    
     userSettings = {
       "window.zoomLevel" = 2;
       "files.autoSave" = "afterDelay";

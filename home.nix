@@ -5,6 +5,7 @@
     ./polybar.nix
     ./rofi.nix
     ./i3.nix
+    ./lf.nix
     ./vscode.nix
     ./picom.nix
     ./alacritty.nix

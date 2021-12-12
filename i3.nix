@@ -20,21 +20,29 @@
       keybindings =
         # let modifier = config.xsession.windowManager.i3.config.modifier; # rip idk hwo to do this anymore
         let modifier = "Mod4";
-        in lib.mkOptionDefault {
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+        in
+        lib.mkOptionDefault {
+          "${modifier}+Return" = "exec --no-startup-id ${pkgs.alacritty}/bin/alacritty";
           "${modifier}+q" = "kill";
           "${modifier}+space" = "floating toggle";
           "${modifier}+d" = ''
-            exec "${pkgs.rofi}/bin/rofi -modi drun,run -show drun -config ~/.config/rofi/rofidmenu.rasi"'';
+            exec --no-startup-id "${pkgs.rofi}/bin/rofi -modi drun,run -show drun -config ~/.config/rofi/rofidmenu.rasi"'';
           "${modifier}+Shift+d" = ''
-            exec "${pkgs.rofi}/bin/rofi -show window -config ~/.config/rofi/rofidmenu.rasi"'';
+            exec --no-startup-id "${pkgs.rofi}/bin/rofi -show window -config ~/.config/rofi/rofidmenu.rasi"'';
 
           "Alt+Tab" = ''
-            exec "${pkgs.rofi}/bin/rofi -show window -config ~/.config/rofi/rofidmenu.rasi"'';
+            exec --no-startup-id "${pkgs.rofi}/bin/rofi -show window -config ~/.config/rofi/rofidmenu.rasi"'';
 
-          "${modifier}+Shift+e" = "exec ~/.config/i3/scripts/powermenu";
-          "Print" = "exec flameshot gui";
-          "${modifier}+Shift+v" = "exec copyq toggle";
+          "${modifier}+Shift+e" = "exec --no-startup-id ~/.config/i3/scripts/powermenu";
+          # Can also add -p ~/Pictures/screenshots
+          "Print" = ''exec --no-startup-id "flameshot gui -p ~/Pictures/screenshots"''; # Print selection
+          "Shift+Print" = ''exec --no-startup-id "flameshot screen -p ~/Pictures/screenshots"''; # Print cursor screen
+          "Ctrl+Shift+Print" = ''exec --no-startup-id "flameshot full -p ~/Pictures/screenshots"''; # Print all monitors
+          "${modifier}+v" = "exec --no-startup-id copyq toggle";
+          "${modifier}+Shift+v" = "exec --no-startup-id copyq toggle";
+          "${modifier}+b" = "split h";
+          "${modifier}+n" = "split v";
+
         };
       floating = { criteria = [{ title = "CopyQ"; }]; };
       startup = [

@@ -23,6 +23,7 @@ in
         inherit pkgs;
       };
   };
+  # nixpkgs.config.allowBroken = true;
 
   nix = {
     package = pkgs.nixFlakes;
@@ -221,6 +222,8 @@ in
     font-manager
     copyq
     firefox
+
+    # Broken package apparently
     # haskellPackages.kmonad
     # breeze-qt5 # Breeze theme for qt5 (cursors!)
 
