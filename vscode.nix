@@ -41,6 +41,20 @@
     #   pkief.material-icon-theme
     #   bungcip.better-toml
     #   yzhang.markdown-all-in-one
+    aaron-bond.better-comments
+alefragnani.Bookmarks
+eamodio.gitlens
+foxundermoon.shell-format
+kruemelkatze.vscode-dashboard
+mads-hartmann.bash-ide-vscode
+naumovs.color-highlight
+timonwong.shellcheck
+#formulahendry.auto-close-tag
+#formulahendry.auto-rename-tag
+donjayamanne.githistory
+#johnpapa.vscode-peacock
+ibm.output-colorizer#streetsidesoftware.code-spell-checker
+
     # ];
   };
 }
