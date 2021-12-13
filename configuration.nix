@@ -157,7 +157,7 @@ in
     desktopManager.cinnamon = {
       enable = true;
     };
-    windowManager.i3 = { enable = true; };
+    windowManager.i3 = { enable = true; package = pkgs.i3-gaps; };
   };
 
   # Enable sound.
@@ -186,6 +186,15 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+    numlockx
+    picom-next
+    i3-gaps
+    dunst
+    rofi
+    polybar
+    libnotify
+    flameshot
+
     neovim
     spacevim
     nano
@@ -265,8 +274,6 @@ in
     pcmanfm
     qpdfview
     brave
-    numlockx
-    picom
     okular
     strawberry
     qbittorrent
