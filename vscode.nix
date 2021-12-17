@@ -32,7 +32,7 @@
       # "editor.wordSeparators" =
       #   ''`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?''; # no dash
       "nix.enableLanguageServer" = true;
-      "path-autocomplete.triggerOutsideStrings": true,
+      "path-autocomplete.triggerOutsideStrings" = true;
     };
     # extensions = with pkgs.vscode-extensions; [
     #   usernamehw.errorlens
@@ -56,8 +56,7 @@
     #   johnpapa.vscode-peacock
     #   ibm.output-colorizer
     #   streetsidesoftware.code-spell-checker
-    ionutvmi.path-autocomplete
-    
+    #   ionutvmi.path-autocomplete
     # ];
 
   };

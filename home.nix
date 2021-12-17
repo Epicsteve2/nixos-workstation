@@ -6,7 +6,7 @@
     ./rofi.nix
     ./i3.nix
     ./lf.nix
-    ./vscode.nix
+    #./vscode.nix
     ./picom.nix
     ./alacritty.nix
     ./dunst.nix
