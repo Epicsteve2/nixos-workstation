@@ -38,17 +38,17 @@ in
     # systemd-boot.consoleMode = "max";
     # systemd-boot.editor = false;
     # systemd-boot.enable = false; # default
-    efi.canTouchEfiVariables = true; # default
+    #efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
-      device = "nodev";
+      #device = "nodev";
       version = 2;
       enable = true;
       default = "saved";
-      efiSupport = true;
+      #efiSupport = true;
       #efiInstallAsRemovable = true; # idk what this does lol
-      gfxmodeEfi = "1920x1080";
-      #gfxmodeBios = "1920x1080";
+      #gfxmodeEfi = "1920x1080";
+      gfxmodeBios = "1920x1080";
       # fixed cuz https://github.com/chickazee4/mynix
       #theme = "/boot/grub/themes/Nakano_Miku/Miku";
       # extraConfig = "set theme=${pkgs.libsForQt5.breeze-grub}/grub/themes/breeze/theme.txt";
@@ -195,7 +195,7 @@ in
     #libnotify
     # flameshot
 
-    # neovim
+    neovim
     # spacevim
     # nano
 
