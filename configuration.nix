@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    <home-manager/nixos>
+    #<home-manager/nixos>
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
@@ -38,7 +38,7 @@ in
     # systemd-boot.consoleMode = "max";
     # systemd-boot.editor = false;
     # systemd-boot.enable = false; # default
-    # efi.canTouchEfiVariables = false; # default
+    efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
       device = "nodev";
@@ -46,11 +46,11 @@ in
       enable = true;
       default = "saved";
       efiSupport = true;
-      efiInstallAsRemovable = true; # idk what this does lol
+      #efiInstallAsRemovable = true; # idk what this does lol
       gfxmodeEfi = "1920x1080";
-      gfxmodeBios = "1920x1080";
+      #gfxmodeBios = "1920x1080";
       # fixed cuz https://github.com/chickazee4/mynix
-      theme = "/boot/grub/themes/Nakano_Miku/Miku";
+      #theme = "/boot/grub/themes/Nakano_Miku/Miku";
       # extraConfig = "set theme=${pkgs.libsForQt5.breeze-grub}/grub/themes/breeze/theme.txt";
 
       #extraConfig = "set theme='/home/stephen/code-monkey/nixos-workstation/GRUB-Theme/Nakano Miku/Miku/theme.txt'";
@@ -154,10 +154,10 @@ in
       };
     };
 
-    desktopManager.cinnamon = {
-      enable = true;
-    };
-    windowManager.i3 = { enable = true; package = pkgs.i3-gaps; };
+    #desktopManager.cinnamon = {
+    #  enable = true;
+    #};
+    windowManager.i3 = { enable = true; };
   };
 
   # Enable sound.
@@ -169,15 +169,15 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     home = "/home/stephen";
-    password = "";
+    password = "dt";
     shell = pkgs.zsh;
   };
 
-  users.users.hm2 = {
+  users.users.hm = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    home = "/home/hm2";
-    password = "";
+    home = "/home/hm";
+    password = "dt";
     shell = pkgs.zsh;
   };
 
@@ -186,112 +186,112 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    numlockx
-    picom-next
-    i3-gaps
-    dunst
-    rofi
-    polybar
-    libnotify
-    flameshot
+    #numlockx
+    #picom-next
+    #i3-gaps
+    #dunst
+    #rofi
+    #polybar
+    #libnotify
+    # flameshot
 
-    neovim
-    spacevim
-    nano
+    # neovim
+    # spacevim
+    # nano
 
-    zathura
+    # zathura
 
-    xorg.xkill
-    lxappearance # Program that manages themeing
-    networkmanagerapplet # GUI for networking
-    dconf
-    gparted
-    peek
+    # xorg.xkill
+    # lxappearance # Program that manages themeing
+    # networkmanagerapplet # GUI for networking
+    # dconf
+    # gparted
+    # peek
 
-    rnix-lsp # language server for nix
-    zsh
-    git
-    zip
-    cht-sh
-    feh
-    wget
-    unzip
-    sxiv
-    gnumake
-    exa
-    htop
-    neofetch
-    ripgrep
-    fd
-    bat
-    fzf
-    nixfmt
+    #rnix-lsp # language server for nix
+    #zsh
+    #git
+    #zip
+    #cht-sh
+    #feh
+    #wget
+    #unzip
+    #sxiv
+    #gnumake
+    #exa
+    #htop
+    #neofetch
+    #ripgrep
+    #fd
+    #bat
+    #fzf
+    #nixfmt
 
-    xorg.xev
-    font-manager
-    copyq
-    firefox
+    # xorg.xev
+    # font-manager
+    # copyq
+    # firefox
 
     # Broken package apparently
     # haskellPackages.kmonad
     # breeze-qt5 # Breeze theme for qt5 (cursors!)
 
-    nur.repos.kira-bruneau.themes.sddm.clairvoyance
-    nur.repos.suhr.minimal-sddm-theme
-    nur.repos.dan4ik605743.sddm-chili
+    #nur.repos.kira-bruneau.themes.sddm.clairvoyance
+    #nur.repos.suhr.minimal-sddm-theme
+    #nur.repos.dan4ik605743.sddm-chili
     #SDDM
-    libsForQt5.qt5.qtgraphicaleffects
-    nur.repos.alarsyo.sddm-sugar-candy
+    #libsForQt5.qt5.qtgraphicaleffects
+    #nur.repos.alarsyo.sddm-sugar-candy
 
-    kalker
-    nodePackages.insect
+    #kalker
+    #nodePackages.insect
 
 
-    tealdeer
+    #tealdeer
     alacritty
-    vscode
-    du-dust
-    home-manager
+    #vscode
+    #du-dust
+    #home-manager
     # ulauncher
-    delta
-    duf
-    bottom
-    gping
-    cached-nix-shell
-
-
-    procs
-    xclip
-    mpv
-    any-nix-shell
-    killall
-    nomacs
-    qview
-    cinnamon.nemo
-    hexyl
-    xfce.thunar
-    neovide
-    pcmanfm
-    qpdfview
-    brave
-    okular
-    strawberry
-    qbittorrent
-    # grub2
-    starship
-    micro
-    gnupg
-    sublime4
-    terminator
-    wezterm
-    zoxide
-    macchina
-    navi
-    freshfetch
-    nitrogen
-    fsearch
-    ranger
-    lf
+    #delta
+    #duf
+    #bottom
+    #gping
+    #cached-nix-shell
+#
+#
+    #procs
+    #xclip
+    #mpv
+    #any-nix-shell
+    #killall
+    #nomacs
+    #qview
+    #cinnamon.nemo
+    #hexyl
+    #xfce.thunar
+    #neovide
+    #pcmanfm
+    #qpdfview
+    #brave
+    #okular
+    #strawberry
+    #qbittorrent
+    ## grub2
+    #starship
+    #micro
+    #gnupg
+    #sublime4
+    #terminator
+    #wezterm
+    #zoxide
+    #macchina
+    #navi
+    #freshfetch
+    #nitrogen
+    #fsearch
+    #ranger
+    #lf
   ];
 
   # source https://discourse.nixos.org/t/ulauncher-and-the-debugging-journey/13141/5
@@ -316,7 +316,7 @@ in
         hide_userland_threads = true;
       };
     };
-    # qt5ct.enable = true; 
+    # qt5ct.enable = true;
     zsh = {
       enable = true;
       # shellInit = ''
