@@ -41,7 +41,7 @@ in
     #efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
-      #device = "nodev";
+      #device = "/dev/sd<STUFF HERE>";
       version = 2;
       enable = true;
       default = "saved";
@@ -77,6 +77,7 @@ in
 
   networking.useDHCP = false;
   networking.interfaces.enp0s3.useDHCP = true;
+  networking.networkmanager.enable = true;
 
   environment.shells = with pkgs; [ zsh ];
 
@@ -167,7 +168,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stephen = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/stephen";
     password = "dt";
     shell = pkgs.zsh;
@@ -175,7 +176,7 @@ in
 
   users.users.hm = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/hm";
     password = "dt";
     shell = pkgs.zsh;
@@ -200,7 +201,7 @@ in
     playerctl
     rofimoji
     rofi-calc
-    haskellPackages.kmonad
+    # haskellPackages.kmonad
     mimeo
     papirus-icon-theme
     #gnome3.gnome_themes_standard
@@ -220,10 +221,7 @@ in
     thefuck
     dex
     peek
-    network-manager
-    networkmanagerapplet
-
-
+    networkmanager
 
     # yt-dlp
     # gimp
@@ -263,15 +261,15 @@ in
     copyq
     firefox
 
-    Broken package apparently
-    haskellPackages.kmonad
+    # Broken package apparently
+    # haskellPackages.kmonad
     breeze-qt5 # Breeze theme for qt5 (cursors!)
 
     #nur.repos.kira-bruneau.themes.sddm.clairvoyance
     #nur.repos.suhr.minimal-sddm-theme
     #nur.repos.dan4ik605743.sddm-chili
     #SDDM
-    #libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtgraphicaleffects
     nur.repos.alarsyo.sddm-sugar-candy
 
     kalker
