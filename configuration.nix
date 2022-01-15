@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    #<home-manager/nixos>
+    <home-manager/nixos>
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
@@ -186,112 +186,144 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    #numlockx
-    #picom-next
-    #i3-gaps
-    #dunst
-    #rofi
-    #polybar
-    #libnotify
-    # flameshot
+    numlockx
+    picom-next
+    i3-gaps
+    dunst
+    rofi
+    polybar
+    libnotify
+     flameshot
+    sxhkd
+    moreutils
+    pamixer
+    playerctl
+    rofimoji
+    rofi-calc
+    haskellPackages.kmonad
+    mimeo
+    papirus-icon-theme
+    #gnome3.gnome_themes_standard
+
 
     neovim
-    # spacevim
-    # nano
+    spacevim
+    nano
 
-    # zathura
+    zathura
 
-    # xorg.xkill
-    # lxappearance # Program that manages themeing
-    # networkmanagerapplet # GUI for networking
-    # dconf
-    # gparted
-    # peek
+    xorg.xkill
+    lxappearance # Program that manages themeing
+    networkmanagerapplet # GUI for networking
+    dconf
+    gparted
+    thefuck
+    dex
+    peek
+    network-manager
+    networkmanagerapplet
 
-    #rnix-lsp # language server for nix
-    #zsh
-    #git
-    #zip
-    #cht-sh
-    #feh
-    #wget
-    #unzip
-    #sxiv
-    #gnumake
-    #exa
-    #htop
-    #neofetch
-    #ripgrep
-    #fd
-    #bat
-    #fzf
-    #nixfmt
 
-    # xorg.xev
-    # font-manager
-    # copyq
-    # firefox
 
-    # Broken package apparently
-    # haskellPackages.kmonad
-    # breeze-qt5 # Breeze theme for qt5 (cursors!)
+    # yt-dlp
+    # gimp
+    # obs-studio
+    # ffmpeg
+    # noto-fonts-cjk
+    # xdotool
+    # discord
+    gnome.seahorse
+    xdg-user-dirs
+    dua
+    ncdu
+
+    rnix-lsp # language server for nix
+    zsh
+    git
+    zip
+    cht-sh
+    feh
+    wget
+    unzip
+    unrar
+    sxiv
+    gnumake
+    exa
+    htop
+    neofetch
+    ripgrep
+    fd
+    bat
+    fzf
+    nixfmt
+
+    xorg.xev
+    font-manager
+    gnome.gnome-font-viewer
+    copyq
+    firefox
+
+    Broken package apparently
+    haskellPackages.kmonad
+    breeze-qt5 # Breeze theme for qt5 (cursors!)
 
     #nur.repos.kira-bruneau.themes.sddm.clairvoyance
     #nur.repos.suhr.minimal-sddm-theme
     #nur.repos.dan4ik605743.sddm-chili
     #SDDM
     #libsForQt5.qt5.qtgraphicaleffects
-    #nur.repos.alarsyo.sddm-sugar-candy
+    nur.repos.alarsyo.sddm-sugar-candy
 
-    #kalker
-    #nodePackages.insect
+    kalker
+    nodePackages.insect
 
-
-    #tealdeer
+    tealdeer
     alacritty
     #vscode
-    #du-dust
-    #home-manager
+    du-dust
+    home-manager
     # ulauncher
-    #delta
-    #duf
-    #bottom
-    #gping
-    #cached-nix-shell
-#
-#
-    #procs
-    #xclip
-    #mpv
-    #any-nix-shell
-    #killall
-    #nomacs
-    #qview
-    #cinnamon.nemo
-    #hexyl
-    #xfce.thunar
-    #neovide
-    #pcmanfm
-    #qpdfview
-    #brave
-    #okular
-    #strawberry
-    #qbittorrent
-    ## grub2
-    #starship
-    #micro
-    #gnupg
-    #sublime4
-    #terminator
-    #wezterm
-    #zoxide
-    #macchina
-    #navi
-    #freshfetch
-    #nitrogen
-    #fsearch
-    #ranger
-    #lf
+    delta
+    duf
+    bottom
+    gping
+    cached-nix-shell#
+
+    sysz
+    cinnamon.bulky
+
+    procs
+    xclip
+    mpv
+    any-nix-shell
+    killall
+    nomacs
+    qview
+    cinnamon.nemo
+    hexyl
+    xfce.thunar
+    neovide
+    pcmanfm
+    qpdfview
+    brave
+    okular
+    strawberry
+    qbittorrent
+    # grub2
+    starship
+    micro
+    gnupg
+    sublime4
+    terminator
+    wezterm
+    zoxide
+    macchina
+    navi
+    freshfetch
+    nitrogen
+    fsearch
+    ranger
+    lf
   ];
 
   # source https://discourse.nixos.org/t/ulauncher-and-the-debugging-journey/13141/5
