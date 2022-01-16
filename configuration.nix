@@ -41,7 +41,7 @@ in
     #efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
-      device = "/dev/sd<STUFF HERE>";
+      device = "/dev/vda";
       version = 2;
       enable = true;
       default = "saved";
@@ -127,6 +127,7 @@ in
       #};
 
       # https://framagit.org/MarianArlt/sddm-sugar-candy
+      setupCommands = ''${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1080'';
       sddm = {
         enable = true;
         autoNumlock = true;
@@ -289,6 +290,7 @@ in
 
     sysz
     cinnamon.bulky
+  vscode
 
     procs
     xclip
