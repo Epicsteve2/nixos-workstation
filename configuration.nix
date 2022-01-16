@@ -64,8 +64,9 @@ in
       '';
     };
   };
+  services.qemuGuest.enable = true;
   environment.variables = rec {
-    BROWSER = "brave";
+    BROWSER = "firefox";
     EDITOR = "spacevim";
     VISUAL = "spacevim";
     TERMINAL = "alacritty";
@@ -111,43 +112,43 @@ in
       #   #   builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
       # };
 
-      #lightdm = {
-      #  enable = true;
-      #   greeters.webkit2 = {
-      #      enable = true;
-      # webkitTheme = pkgs.fetchFromGitHub {
-      #   owner = "NoiSek";
-      #   repo = "Aether";
-      #   rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
-      #   sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
-      # };
-      # webkitTheme =
-      #    pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
-      # };
-      #};
+      lightdm = {
+        enable = true;
+        greeters.webkit2 = {
+          enable = true;
+          # webkitTheme = pkgs.fetchFromGitHub {
+          #   owner = "NoiSek";
+          #   repo = "Aether";
+          #   rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
+          #   sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
+          # };
+          webkitTheme =
+            pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
+        };
+      };
 
       # https://framagit.org/MarianArlt/sddm-sugar-candy
       setupCommands = ''${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1080'';
-      sddm = {
-        enable = true;
-        autoNumlock = true;
+      # sddm = {
+      #   enable = true;
+      #   autoNumlock = true;
 
-        theme = "sugar-candy";
-        # theme = "clairvoyance";
-        # theme = "minimal-sddm-theme";
-        # theme = "sddm-chili";
+      #   theme = "sugar-candy";
+      #   # theme = "clairvoyance";
+      #   # theme = "minimal-sddm-theme";
+      #   # theme = "sddm-chili";
 
-        # settings = {
-        #   General = {
-        #     Background = "/usr/share/backgrounds/1172141.png";
-        #   };
-        #   # Theme = {
-        #   #   ScreenWidth = 1920;
-        #   # ScreenHeight = 1080;
-        #   # FormPosition = "right";
-        #   # };
-        # };
-      };
+      #   # settings = {
+      #   #   General = {
+      #   #     Background = "/usr/share/backgrounds/1172141.png";
+      #   #   };
+      #   #   # Theme = {
+      #   #   #   ScreenWidth = 1920;
+      #   #   # ScreenHeight = 1080;
+      #   #   # FormPosition = "right";
+      #   #   # };
+      #   # };
+      # };
 
       defaultSession = "none+i3";
       autoLogin = {
@@ -156,9 +157,9 @@ in
       };
     };
 
-    #desktopManager.cinnamon = {
-    #  enable = true;
-    #};
+    desktopManager.cinnamon = {
+      enable = true;
+    };
     windowManager.i3 = { enable = true; };
   };
 
@@ -195,7 +196,7 @@ in
     rofi
     polybar
     libnotify
-     flameshot
+    flameshot
     sxhkd
     moreutils
     pamixer
@@ -286,11 +287,11 @@ in
     duf
     bottom
     gping
-    cached-nix-shell#
+    cached-nix-shell #
 
     sysz
     cinnamon.bulky
-  vscode
+    vscode
 
     procs
     xclip
