@@ -2,14 +2,14 @@
 
 {
   imports = [
-    ./polybar.nix
-    ./rofi.nix
-    ./i3.nix
-    ./lf.nix
+    #./polybar.nix
+    #./rofi.nix
+    #./i3.nix
+    #./lf.nix
     #./vscode.nix
-    ./picom.nix
-    ./alacritty.nix
-    ./dunst.nix
+    #./picom.nix
+    #./alacritty.nix
+    #./dunst.nix
   ];
   nixpkgs.config.packageOverrides = pkgs: {
     nur = import
@@ -22,28 +22,28 @@
   home.username = "stephen";
   home.homeDirectory = "/home/stephen";
 
-  home.stateVersion = "22.05";
+  home.stateVersion = "21.05";
   nixpkgs.config.allowUnfree = true;
 
   programs.home-manager.enable = true;
   # Unfortunately. saving to different file seems to not work...
-  services.flameshot = {
-    enable = true;
-    settings = {
-      General = {
+  #services.flameshot = {
+   # enable = true;
+    #settings = {
+     # General = {
         # # Probably some way to do this lol. I'm just bad at nix
         # savePath = builtins.concatStringsSep  builtins.getEnv "HOME";
-        savePath = builtins.getEnv "HOME";
-        savePathFixed = true;
+#        savePath = builtins.getEnv "HOME";
+ #       savePathFixed = true;
         # hardcoded...
-        ignoreUpdateToVersion = "0.10.1";
-      };
-      Shortcuts = {
-        TYPE_SAVE = "Ctrl+S";
-        TYPE_COPY = "Ctrl+C";
-      };
-    };
-  };
+  #      ignoreUpdateToVersion = "0.10.1";
+   #   };
+    #  Shortcuts = {
+     #   TYPE_SAVE = "Ctrl+S";
+      #  TYPE_COPY = "Ctrl+C";
+      #};
+    #};
+  #};
   gtk = {
     enable = true;
     iconTheme = {
@@ -87,25 +87,25 @@
       name = "adwaita-dark";
     };
   };
-  xsession = {
-    enable = true;
-    pointerCursor = {
-      size = 40;
-      package = pkgs.nur.repos.ambroisie.vimix-cursors;
-      name = "Vimix-white-cursors";
-      # name = "Vimix-cursors";
-
-      # package = pkgs.capitaine-cursors;
-      # name = "capitaine-cursors";
-
-      # package = pkgs.nur.repos.ambroisie.volantes-cursors;
-      # name = "volantes_light_cursors";
-      # name = "volantes_cursors";
-
-      # # Theres a lot of letters lol
-      # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
-      # name = "LyraF-cursors";
-    };
-  };
+  #xsession = {
+  #  enable = true;
+  #  pointerCursor = {
+  #    size = 40;
+  #    package = pkgs.nur.repos.ambroisie.vimix-cursors;
+  #    name = "Vimix-white-cursors";
+  #    # name = "Vimix-cursors";
+#
+#  #    # package = pkgs.capitaine-cursors;
+#  #    # name = "capitaine-cursors";
+#
+#  #    # package = pkgs.nur.repos.ambroisie.volantes-cursors;
+#  #    # name = "volantes_light_cursors";
+#  #    # name = "volantes_cursors";
+#
+#  #    # # Theres a lot of letters lol
+#  #    # package = pkgs.nur.repos.dan4ik605743.lyra-cursors;
+#  #    # name = "LyraF-cursors";
+#  #  };
+  #};
   # home.packages = with pkgs; [ arc-theme breeze-icons capitaine-cursors ];
 }

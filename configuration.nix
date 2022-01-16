@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    <home-manager/nixos>
+#    <home-manager/nixos>
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
@@ -41,7 +41,7 @@ in
     #efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
-      #device = "/dev/sd<STUFF HERE>";
+      device = "/dev/vda";
       version = 2;
       enable = true;
       default = "saved";
@@ -127,6 +127,7 @@ in
       #};
 
       # https://framagit.org/MarianArlt/sddm-sugar-candy
+      setupCommands = ''${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1080'';
       sddm = {
         enable = true;
         autoNumlock = true;
@@ -168,7 +169,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stephen = {
     isNormalUser = true;
-    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/stephen";
     password = "dt";
     shell = pkgs.zsh;
@@ -176,7 +177,7 @@ in
 
   users.users.hm = {
     isNormalUser = true;
-    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/hm";
     password = "dt";
     shell = pkgs.zsh;
@@ -289,6 +290,7 @@ in
 
     sysz
     cinnamon.bulky
+  vscode
 
     procs
     xclip

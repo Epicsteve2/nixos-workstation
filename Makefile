@@ -20,6 +20,7 @@ help:
 
 .PHONY: home-manager ## Prints a diff of home-manager changes, then switches
 home-manager:
+	@[ -d ~/.config/nixpkgs ] || mkdir --verbose --parents ~/.config/nixpkgs
 	@$(MAKE) home-manager-switch || $(MAKE) home-manager-fail
 
 .PHONY: home-manager-switch ## Copy current files to ~/.config/nixpkgs, then switches
