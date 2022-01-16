@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    <home-manager/nixos>
+    # <home-manager/nixos>
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
@@ -41,7 +41,7 @@ in
     #efi.canTouchEfiVariables = true; # default
     timeout = 10;
     grub = {
-      #device = "/dev/sd<STUFF HERE>";
+      device = "/dev/sd<STUFF HERE>";
       version = 2;
       enable = true;
       default = "saved";
@@ -168,7 +168,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stephen = {
     isNormalUser = true;
-    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/stephen";
     password = "dt";
     shell = pkgs.zsh;
@@ -176,7 +176,7 @@ in
 
   users.users.hm = {
     isNormalUser = true;
-    extraGroups = [ "wheel", "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     home = "/home/hm";
     password = "dt";
     shell = pkgs.zsh;
