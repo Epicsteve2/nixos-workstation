@@ -64,7 +64,9 @@ in
       '';
     };
   };
+  services.xserver.videoDrivers = [ "qxl" ];
   services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = true;
   environment.variables = rec {
     BROWSER = "firefox";
     EDITOR = "spacevim";
@@ -208,6 +210,10 @@ in
     papirus-icon-theme
     #gnome3.gnome_themes_standard
 
+    
+    qemu-utils
+    spice-vdagent
+    xorg.xf86videoqxl
 
     neovim
     spacevim
@@ -271,8 +277,8 @@ in
     #nur.repos.suhr.minimal-sddm-theme
     #nur.repos.dan4ik605743.sddm-chili
     #SDDM
-    libsForQt5.qt5.qtgraphicaleffects
-    nur.repos.alarsyo.sddm-sugar-candy
+    # libsForQt5.qt5.qtgraphicaleffects
+    # nur.repos.alarsyo.sddm-sugar-candy
 
     kalker
     nodePackages.insect
