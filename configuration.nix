@@ -64,7 +64,8 @@ in
       '';
     };
   };
-  services.xserver.videoDrivers = [ "qxl" ];
+  # AHJHHHHH FRICK 1920x1080 sucks in vm
+  # services.xserver.videoDrivers = [ "qxl" ];
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
   environment.variables = rec {
