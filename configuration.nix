@@ -211,7 +211,7 @@ in
     papirus-icon-theme
     #gnome3.gnome_themes_standard
 
-    
+
     qemu-utils
     spice-vdagent
     xorg.xf86videoqxl
@@ -219,6 +219,7 @@ in
     neovim
     spacevim
     nano
+    onefetch
 
     zathura
 
