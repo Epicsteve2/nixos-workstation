@@ -2,27 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, pkgs, lib, ... }:
-let
-  nur-no-pkgs = import
-    (builtins.fetchTarball
-      "https://github.com/nix-community/NUR/archive/master.tar.gz")
-    { };
-in
 {
   imports = [
     # <home-manager/nixos>
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
+    # nur-no-pkgs.repos.kira-bruneau.modules.lightdm-webkit2-greeter
   ];
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import
-      (builtins.fetchTarball
-        "https://github.com/nix-community/NUR/archive/master.tar.gz")
-      {
-        inherit pkgs;
-      };
-  };
   # nixpkgs.config.allowBroken = true;
 
   nix = {
@@ -64,8 +50,6 @@ in
       '';
     };
   };
-  # AHJHHHHH FRICK 1920x1080 sucks in vm
-  # services.xserver.videoDrivers = [ "qxl" ];
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
   environment.variables = rec {
@@ -88,7 +72,7 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
-    font = "FiraCode Nerd Font";
+    # font = "FiraCode Nerd Font";
     keyMap = "us";
   };
 
@@ -99,71 +83,9 @@ in
     enable = true;
     layout = "us";
 
-    displayManager = {
-      # lightdm = {
-      #   enable = true;
-      #   # greeters.gtk = {
-      #   #   enable = true;
-      #   #   theme.name = "Sweet-Dark";
-      #   #   theme.package = pkgs.sweet;
-      #   #   iconTheme.name = "Arc";
-      #   #   iconTheme.package = pkgs.arc-icon-theme;
-      #   #   # Really weird bug? idk man
-      #   #   extraConfig = "";
-      #   # };
-      #   # background =
-      #   #   builtins.fetchurl { url = "https://i.imgur.com/QLntV2f.jpg"; };
-      # };
-
-      lightdm = {
-        enable = true;
-        greeters.webkit2 = {
-          enable = true;
-          # webkitTheme = pkgs.fetchFromGitHub {
-          #   owner = "NoiSek";
-          #   repo = "Aether";
-          #   rev = "76802308e1f64cffa1d0d392a0f953e99a797496";
-          #   sha256 = "1w5w15py5rbrw1ad24din7kwcjz82mh625d7b4r7i8kzb9knl7d6";
-          # };
-          webkitTheme =
-            pkgs.nur.repos.kira-bruneau.themes.lightdm-webkit2-greeter.litarvan;
-        };
-      };
-
-      # https://framagit.org/MarianArlt/sddm-sugar-candy
-      setupCommands = ''${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1080'';
-      # sddm = {
-      #   enable = true;
-      #   autoNumlock = true;
-
-      #   theme = "sugar-candy";
-      #   # theme = "clairvoyance";
-      #   # theme = "minimal-sddm-theme";
-      #   # theme = "sddm-chili";
-
-      #   # settings = {
-      #   #   General = {
-      #   #     Background = "/usr/share/backgrounds/1172141.png";
-      #   #   };
-      #   #   # Theme = {
-      #   #   #   ScreenWidth = 1920;
-      #   #   # ScreenHeight = 1080;
-      #   #   # FormPosition = "right";
-      #   #   # };
-      #   # };
-      # };
-
-      defaultSession = "none+i3";
-      autoLogin = {
-        enable = false;
-        user = "stephen";
-      };
-    };
-
-    desktopManager.cinnamon = {
+    desktopManager.plasma5 = {
       enable = true;
     };
-    windowManager.i3 = { enable = true; };
   };
 
   # Enable sound.
@@ -192,32 +114,12 @@ in
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    numlockx
-    picom-next
-    i3-gaps
-    dunst
-    rofi
-    polybar
-    libnotify
     flameshot
-    sxhkd
     moreutils
-    pamixer
-    playerctl
-    rofimoji
-    rofi-calc
     # haskellPackages.kmonad
     mimeo
-    papirus-icon-theme
-    #gnome3.gnome_themes_standard
-
-
-    qemu-utils
-    spice-vdagent
-    xorg.xf86videoqxl
 
     neovim
-    spacevim
     nano
     onefetch
 
@@ -240,7 +142,7 @@ in
     # noto-fonts-cjk
     # xdotool
     # discord
-    gnome.seahorse
+    # gnome.seahorse
     xdg-user-dirs
     dua
     ncdu
@@ -271,16 +173,7 @@ in
     copyq
     firefox
 
-    # Broken package apparently
-    # haskellPackages.kmonad
     breeze-qt5 # Breeze theme for qt5 (cursors!)
-
-    #nur.repos.kira-bruneau.themes.sddm.clairvoyance
-    #nur.repos.suhr.minimal-sddm-theme
-    #nur.repos.dan4ik605743.sddm-chili
-    #SDDM
-    # libsForQt5.qt5.qtgraphicaleffects
-    # nur.repos.alarsyo.sddm-sugar-candy
 
     kalker
     nodePackages.insect
@@ -349,14 +242,14 @@ in
   # };
 
   programs = {
-    htop = {
-      settings = {
-        sort_direction = true;
-        sort_key = "PERCENT_CPU";
-        hide_kernel_threads = true;
-        hide_userland_threads = true;
-      };
-    };
+    # htop = {
+    #   settings = {
+    #     sort_direction = true;
+    #     sort_key = "PERCENT_CPU";
+    #     hide_kernel_threads = true;
+    #     hide_userland_threads = true;
+    #   };
+    # };
     # qt5ct.enable = true;
     zsh = {
       enable = true;
