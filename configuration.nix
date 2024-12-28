@@ -1,3 +1,6 @@
+# TODO: 
+# nix flakes for channels at least
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -161,7 +164,7 @@
     '';
   };
 
-  networking.hostName = "nixos";
+  networking.hostName = "stephen-nixos";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
@@ -179,15 +182,15 @@
     variant = "";
   };
 
-  # i don't think this really works in VN's
-  services.xserver.xrandrHeads = [{
-    output = "Virtual-1";
-    primary = true;
-    monitorConfig = "DisplaySize 1920 1080";
-  }];
+  # # i don't think this really works in VM's
+  # services.xserver.xrandrHeads = [{
+  #   output = "Virtual-1";
+  #   primary = true;
+  #   monitorConfig = "DisplaySize 1920 1080";
+  # }];
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -255,6 +258,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "unstable"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
 }
