@@ -30,11 +30,6 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  # just for VMs
-  services.qemuGuest.enable = true;
-  services.spice-vdagentd.enable = true;
-  security.sudo.wheelNeedsPassword = false; # ffor VM only
-
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
@@ -82,75 +77,74 @@
     gtrash
 
     # # other programs that may be useless in VMs 
-    # yt-dlp
-    # obs 
+    yt-dlp
+    obs 
     # gimp 
-    # peek 
-    # onefetch 
-    # copyq 
-    # megasync 
-    # qalculate
+    peek 
+    onefetch 
+    copyq 
+    megasync 
+    qalculate
     # # dust
     # # sysz
-    # kondo 
-    # vscode 
-    # mpv 
+    kondo 
+    vscode 
+    mpv 
     # nomacs 
     # # hexyl
     # qpdfview 
-    # qbittorrent 
-    # strawberry
+    qbittorrent 
+    strawberry
     # systemctl-tui
-    # bruno 
+    bruno 
     # noisetorch # maybe there's an alt?
     # micro 
-    # vlc 
+    vlc 
     # helix 
     # antimicrox 
     # audacity 
-    # discord 
+    discord 
     # steam
     # # bpython
-    # chromium
-    # droidcam 
+    chromium
+    droidcam 
     # dolphin-emu 
-    # jdownloader
+    jdownloader
     # kdenlive 
     # kdePackages.kmousetool 
-    # libreoffice 
+    libreoffice 
     # lutris
-    # wine 
-    # winetricks 
-    # protontricks 
-    # protonup-qt 
+    wine 
+    winetricks 
+    protontricks 
+    protonup-qt 
     # retroarch 
-    # scrcpy 
-    # thunderbird 
+    scrcpy 
+    thunderbird 
     # telegram-desktop 
     # wireshark 
     # zoom-us 
-    # virt-manager 
-    # docker
-    # go-task 
+    virt-manager 
+    docker
+    go-task 
     # trashy 
-    # distrobox 
+    distrobox 
     # # flatpak 
     # # snap # not supported!!
-    # kanata
-    # miniserve
-    # eget
+    kanata
+    miniserve
+    eget
     # inlyne # idk maybe not good
   ];
 
-  # programs.kdeconnect.enable = true;
+  programs.kdeconnect.enable = true;
   # services.flatpak.enable = true;
-  # xdg.portal.enable = true;
+  xdg.portal.enable = true;
 
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-  # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.timeout = 10;
@@ -182,7 +176,7 @@
     '';
   };
 
-  networking.hostName = "stephen-nixos";
+  networking.hostName = "stephen";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
@@ -244,12 +238,12 @@
     packages = with pkgs;
       [
         kdePackages.kate
-        #  thunderbird
+        # thunderbird
       ];
   };
 
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "stephen";
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "stephen";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
