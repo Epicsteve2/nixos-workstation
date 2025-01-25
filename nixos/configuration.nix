@@ -11,8 +11,7 @@
     ./hardware-configuration.nix
   ];
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
       # Enable flakes and new 'nix' command
@@ -26,7 +25,7 @@
     channel.enable = false;
 
     # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
@@ -73,62 +72,62 @@
     atuin
     yazi
     # trashy
-    just 
+    just
     gtrash
 
     # # other programs that may be useless in VMs 
     yt-dlp
     # obs 
     # gimp 
-    peek 
-    onefetch 
-    copyq 
-    megasync 
+    peek
+    onefetch
+    copyq
+    megasync
     # qalculate
     # # dust
     # # sysz
-    kondo 
-    vscode 
-    mpv 
+    kondo
+    vscode
+    mpv
     # nomacs 
     # # hexyl
     # qpdfview 
-    qbittorrent 
+    qbittorrent
     strawberry
     # systemctl-tui
-    bruno 
+    bruno
     # noisetorch # maybe there's an alt?
     # micro 
-    vlc 
+    vlc
     # helix 
     # antimicrox 
     # audacity 
-    discord 
+    discord
     # steam
     # # bpython
     chromium
-    droidcam 
+    droidcam
     # dolphin-emu 
     # jdownloader
     # kdenlive 
     # kdePackages.kmousetool 
-    libreoffice 
+    libreoffice
     # lutris
-    wine 
-    winetricks 
-    protontricks 
-    protonup-qt 
+    wine
+    winetricks
+    protontricks
+    protonup-qt
     # retroarch 
-    scrcpy 
-    thunderbird 
+    scrcpy
+    thunderbird
     # telegram-desktop 
     # wireshark 
     # zoom-us 
-    virt-manager 
+    virt-manager
     docker
-    go-task 
+    go-task
     # trashy 
-    distrobox 
+    distrobox
     # # flatpak 
     # # snap # not supported!!
     kanata
@@ -156,7 +155,7 @@
     enable = true;
     device = "/dev/disk/by-uuid/db22b842-8a31-446a-8d2e-2fe8dc661516";
     # device = "/dev/sdx1";
-    useOSProber = true;
+    useOSProber = false;
     efiSupport = true;
     default = "saved";
     # gfxmodeBios = "1920x1080";
@@ -241,7 +240,7 @@
   users.users.stephen = {
     isNormalUser = true;
     description = "stephen";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "uinput"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "uinput" ];
     packages = with pkgs;
       [
         kdePackages.kate
