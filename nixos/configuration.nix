@@ -78,13 +78,13 @@
 
     # # other programs that may be useless in VMs 
     yt-dlp
-    obs 
+    # obs 
     # gimp 
     peek 
     onefetch 
     copyq 
     megasync 
-    qalculate
+    # qalculate
     # # dust
     # # sysz
     kondo 
@@ -109,7 +109,7 @@
     chromium
     droidcam 
     # dolphin-emu 
-    jdownloader
+    # jdownloader
     # kdenlive 
     # kdePackages.kmousetool 
     libreoffice 
@@ -146,13 +146,20 @@
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
+  # Use the systemd-boot EFI boot loader.
+  # boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # Bootloader.
   boot.loader.timeout = 10;
   boot.loader.grub = {
     enable = true;
-    device = "/dev/vda";
+    device = "/dev/disk/by-uuid/db22b842-8a31-446a-8d2e-2fe8dc661516";
+    # device = "/dev/sdx1";
     useOSProber = true;
+    efiSupport = true;
     default = "saved";
+    # gfxmodeBios = "1920x1080";
     gfxmodeBios = "1920x1080";
     extraEntries = ''
       menuentry "Reboot" {
