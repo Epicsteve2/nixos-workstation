@@ -1,11 +1,8 @@
-# TODO: 
-# nix flakes for channels at least
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 # let 
 #   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 # in
@@ -13,6 +10,25 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  nix = let
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
+    settings = {
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+      # Opinionated: disable global registry
+      flake-registry = "";
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = config.nix.nixPath;
+    };
+    # Opinionated: disable channels
+    channel.enable = false;
+
+    # Opinionated: make flake registry and nix path match flake inputs
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+  };
 
   # just for VMs
   services.qemuGuest.enable = true;
@@ -61,7 +77,9 @@
     libnotify
     atuin
     yazi
-    trashy
+    # trashy
+    just 
+    gtrash
 
     # # other programs that may be useless in VMs 
     # yt-dlp
@@ -132,7 +150,7 @@
   nixpkgs.config.allowUnfree = true;
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.timeout = 10;
@@ -222,7 +240,7 @@
   users.users.stephen = {
     isNormalUser = true;
     description = "stephen";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "uinput"];
     packages = with pkgs;
       [
         kdePackages.kate
