@@ -31,7 +31,10 @@
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
-
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot =
+    true; # powers up the default Bluetooth controller on boot
+  # services.touchegg.enable = true;
   environment.systemPackages = with pkgs; [
     spice-vdagent # just for VM's
     nodejs
@@ -41,6 +44,9 @@
     # unstable.neovim
     neovim
     chezmoi
+    fusuma
+    # ydotool
+    # touchegg
     # rustup
     cargo
     rustc
@@ -116,7 +122,7 @@
     libreoffice
     # lutris
     # for vim
-    wl-clipboard
+    # wl-clipboard
     #  for zsh-notify
     xdotool
     wmctrl
@@ -137,12 +143,15 @@
     distrobox
     # # flatpak 
     # # snap # not supported!!
-    kanata
+    kanata-with-cmd
     miniserve
     eget
+    xclip
     go
     # inlyne # idk maybe not good
   ];
+  services.kanata.enable = true;
+  services.kanata.package = pkgs.kanata-with-cmd;
 
   programs.kdeconnect.enable = true;
   # services.flatpak.enable = true;
@@ -194,10 +203,13 @@
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
-  services.xserver.enable = false;
-  services.displayManager.sddm.wayland.enable = true;
+  # services.xserver.enable = false;
+  services.xserver.enable = true;
+  # services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.wayland.enable = false;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  services.displayManager.defaultSession = "plasmax11";
 
   services.xserver.xkb = {
     layout = "us";
@@ -236,7 +248,15 @@
     description = "stephen";
     useDefaultShell = false;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "uinput" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirt"
+      "uinput"
+      "input"
+      # "ydotool"
+    ];
     packages = with pkgs;
       [
         kdePackages.kate
@@ -254,6 +274,7 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   security.sudo.wheelNeedsPassword = false;
+  # programs.ydotool.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
