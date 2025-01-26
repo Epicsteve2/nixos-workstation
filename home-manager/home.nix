@@ -1,11 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 { inputs, lib, config, pkgs, ... }: {
-  # You can import other home-manager modules here
   imports = [
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
     # <plasma-manager/modules>
@@ -13,15 +9,61 @@
   ];
   programs.plasma = {
     enable = true;
-    hotkeys.commands."launch-alacritty" = {
-      name = "Launch Konsole";
-      key = "Meta+T";
-      command = "alacritty";
+
+    workspace = {
+      # clickItemTo = "select";
+      lookAndFeel = "org.kde.breezedark.desktop";
+      # cursor.theme = "Bibata-Modern-Ice";
+      # iconTheme = "Papirus-Dark";
+      # wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images/1080x1920.png";
     };
+    spectacle = {
+      shortcuts = {
+        captureRectangularRegion = "Print";
+        captureCurrentMonitor = "Meta+Print";
+      };
+    };
+    shortcuts = {
+      kwin = { "Grid View" = "Meta+Tab"; };
+      "services/Alacritty.desktop" = { "_launch" = "Meta+T"; };
+      "services/com.github.hluk.copyq.desktop" = { "_launch" = "Meta+V"; };
+
+    };
+    ## doesn't rlly work
+    # input.touchpads = [{
+    #   disableWhileTyping = true;
+    #   enable = true;
+    # }]; 
+    kwin = {
+      virtualDesktops = {
+        number = 9;
+        rows = 3;
+      };
+    };
+    configFile = {
+      kwinrc = {
+        Windows = {
+          "BorderlessMaximizedWindows" = true;
+          "FocusPolicy" = "FocusFollowsMouse";
+          "RollOverDesktops" = true;
+        };
+      };
+    };
+    # startup = { startupScript = { fusuma = { text = "fusuma"; }; }; };
+    ## this probably isn't worth it
+    # window-rules = {
+    #   thunderbird = {
+    #     match = {
+    #       windows-class = {
+    #         value = "thunderbird";
+    #         type = "exact";
+    #       };
+    #     };
+    #   };
+    # };
   };
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -33,28 +75,12 @@
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = _: true;
     };
   };
-  # [Unit]
-  # Description=Kanata keyboard remapper
-  # Documentation=https://github.com/jtroo/kanata
-  #
-  # [Service]
-  # ; Environment=PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
-  # Environment=DISPLAY=:0
-  # Environment=HOME=/home/stephen
-  # Type=simple
-  # ExecStart=/run/current-system/sw/bin/kanata --cfg /home/stephen/.config/kanata/asus-laptop.kbd
-  # Restart=never
-  # 
-  # [Install]
-  # WantedBy=default.target
   systemd = {
     user = {
       services = {
@@ -64,41 +90,47 @@
             Documentation = "https://github.com/jtroo/kanata";
           };
           Service = {
-            Environment = "DISPLAY=:0";
-            # Environment=HOME=/home/stephen
-            # Type=simple
+            Environment = [ "DISPLAY=:0" "PATH=/run/current-system/sw/bin" ];
             ExecStart =
               "/run/current-system/sw/bin/kanata --cfg /home/stephen/.config/kanata/asus-laptop.kbd";
-
+            Type = "simple";
+            Restart = "no";
           };
-          Install = { WantedBy = [ "default.target" ]; };
+          Install = { WantedBy = [ "plasma-workspace.target" ]; };
         };
 
         fusuma = {
           Unit = { Description = "Touchpad gestures"; };
           Service = {
-            # Environment = "DISPLAY=:0";
-            # Environment=HOME=/home/stephen
-            # Type=simple
+            Type = "simple";
+            Restart = "no";
             ExecStart = "/run/current-system/sw/bin/fusuma";
-
+            Environment = [ "DISPLAY=:0" "PATH=/run/current-system/sw/bin" ];
+            KillMode = "process";
           };
-          Install = { WantedBy = [ "default.target" ]; };
+          Install = { WantedBy = [ "plasma-workspace.target" ]; };
         };
       };
     };
-    # stephen = {
-    #   services = [
-    #
-    # ]
-    # }
   };
 
-  # TODO: Set your username
   home = {
     username = "stephen";
     homeDirectory = "/home/stephen";
   };
+
+  ## maybe i should just copy the config folder...
+  # accounts = {
+  #   email = {
+  #     accounts = {
+  #       "work" = {
+  #         address = "stephenguo14@gmail.com";
+  #         flavor = "gmail.com";
+  #         thunderbird = { enable = true; };
+  #       };
+  #     };
+  #   };
+  # };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;

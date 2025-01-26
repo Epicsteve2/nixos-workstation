@@ -35,10 +35,21 @@
   hardware.bluetooth.powerOnBoot =
     true; # powers up the default Bluetooth controller on boot
   # services.touchegg.enable = true;
+  programs.command-not-found.enable = false;
+  programs.nix-index.enable = true;
+  # for home-manager, use programs.bash.initExtra instead
+  # programs.zsh.interactiveShellInit = ''
+  #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  # '';
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    BROWSER = "firefox";
+  };
   environment.systemPackages = with pkgs; [
-    spice-vdagent # just for VM's
     nodejs
     python3
+    comma
     # nil
     # xorg.xrandr # just for sddm
     # unstable.neovim
@@ -262,6 +273,13 @@
         kdePackages.kate
         # thunderbird
       ];
+  };
+  users.users.test = {
+    isNormalUser = true;
+    description = "test";
+    extraGroups =
+      [ "networkmanager" "wheel" "docker" "libvirt" "uinput" "input" ];
+    password = "dt";
   };
 
   # temp
