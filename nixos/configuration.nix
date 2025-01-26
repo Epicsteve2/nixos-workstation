@@ -199,13 +199,6 @@
           fwsetup
         }
       fi
-      # I found this in the arch wiki, but i don't think my grub will have this lol
-      # menuentry "UEFI Shell" {
-      #   insmod fat
-      #   insmod chain
-      #   search --no-floppy --set=root --file /shellx64.efi
-      #   chainloader /shellx64.efi
-      # }
     '';
   };
 
@@ -214,9 +207,7 @@
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
-  # services.xserver.enable = false;
   services.xserver.enable = true;
-  # services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.wayland.enable = false;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
@@ -283,8 +274,9 @@
   };
 
   # temp
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "stephen";
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "stephen";
+
   # Default timestamp_type=global
   security.sudo.extraConfig = ''
     Defaults !tty_tickets
