@@ -5,5 +5,5 @@ clean:
 
 switch:
   NIX_CONFIG="experimental-features = nix-command flakes"
-  nixos-rebuild switch --use-remote-sudo --flake .#nixos
+  nixos-rebuild switch --use-remote-sudo --flake .#asus-vivobook
   # if on installation media, run `nixos-install --flake .#nixos`

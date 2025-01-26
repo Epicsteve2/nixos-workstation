@@ -41,7 +41,9 @@
     # unstable.neovim
     neovim
     chezmoi
-    rustup
+    # rustup
+    cargo
+    rustc
     alacritty
     gcc
     tmux
@@ -113,6 +115,11 @@
     # kdePackages.kmousetool 
     libreoffice
     # lutris
+    # for vim
+    wl-clipboard
+    #  for zsh-notify
+    xdotool
+    wmctrl
     wine
     winetricks
     protontricks
@@ -124,7 +131,7 @@
     # wireshark 
     # zoom-us 
     virt-manager
-    docker
+    # docker
     go-task
     # trashy 
     distrobox
@@ -133,6 +140,7 @@
     kanata
     miniserve
     eget
+    go
     # inlyne # idk maybe not good
   ];
 
@@ -142,8 +150,9 @@
 
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.fish;
   programs.zsh.enable = true;
+  programs.fish.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   # boot.loader.systemd-boot.enable = true;
@@ -154,11 +163,9 @@
   boot.loader.grub = {
     enable = true;
     device = "/dev/disk/by-uuid/db22b842-8a31-446a-8d2e-2fe8dc661516";
-    # device = "/dev/sdx1";
     useOSProber = false;
     efiSupport = true;
     default = "saved";
-    # gfxmodeBios = "1920x1080";
     gfxmodeBios = "1920x1080";
     extraEntries = ''
       menuentry "Reboot" {
@@ -182,7 +189,7 @@
     '';
   };
 
-  networking.hostName = "stephen";
+  networking.hostName = "asus-vivobook";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
@@ -191,21 +198,11 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  # doesn't work, so idc
-  # services.xserver.displayManager.setupCommands =
-  #   "${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --mode 1920x1080";
 
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
-
-  # # i don't think this really works in VM's
-  # services.xserver.xrandrHeads = [{
-  #   output = "Virtual-1";
-  #   primary = true;
-  #   monitorConfig = "DisplaySize 1920 1080";
-  # }];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -233,13 +230,12 @@
 
     ];
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stephen = {
     isNormalUser = true;
     description = "stephen";
+    useDefaultShell = false;
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" "libvirt" "uinput" ];
     packages = with pkgs;
       [
@@ -248,8 +244,16 @@
       ];
   };
 
-  # services.displayManager.autoLogin.enable = true;
-  # services.displayManager.autoLogin.user = "stephen";
+  # temp
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "stephen";
+  # Default timestamp_type=global
+  security.sudo.extraConfig = ''
+    Defaults !tty_tickets
+  '';
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "btrfs";
+  security.sudo.wheelNeedsPassword = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
