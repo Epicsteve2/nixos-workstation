@@ -50,12 +50,16 @@
     nodejs
     python3
     comma
+    pnpm
     # nil
     # xorg.xrandr # just for sddm
     # unstable.neovim
     neovim
     chezmoi
     fusuma
+    terraform
+    lazydocker
+    # corepack
     # ydotool
     # touchegg
     # rustup
@@ -144,6 +148,8 @@
     # retroarch 
     scrcpy
     thunderbird
+    slack
+    ksshaskpass
     # telegram-desktop 
     # wireshark 
     # zoom-us 
@@ -259,11 +265,11 @@
       "input"
       # "ydotool"
     ];
-    packages = with pkgs;
-      [
-        kdePackages.kate
-        # thunderbird
-      ];
+    packages = with pkgs; [
+      kdePackages.kate
+      kdePackages.ksshaskpass
+      # thunderbird
+    ];
   };
   users.users.test = {
     isNormalUser = true;

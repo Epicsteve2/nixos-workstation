@@ -40,13 +40,11 @@
     fsType = "btrfs";
     options = [ "subvol=swap" "noatime" ];
   };
-
-  # fileSystems."/swap" = {
-  #   device = "/dev/disk/by-uuid/db22b842-8a31-446a-8d2e-2fe8dc661516";
-  #   fsType = "btrfs";
-  #   options = [ "subvol=swap" "noatime" ];
-  # };
-  #
+  fileSystems."/var/lib/docker/btrfs" = {
+    device = "/swap/root/var/lib/docker/btrfs";
+    fsType = "none";
+    options = [ "bind" ];
+  };
   swapDevices = [{ device = "/swap/swapfile"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

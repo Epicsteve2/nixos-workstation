@@ -7,6 +7,17 @@
     # <plasma-manager/modules>
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
+  ## disabling cuz i wanna test tis first
+  # programs.firefox.profiles.default.settings = {
+  #   "browser.tabs.tabMinWidth" = 200;
+  #   "widget.use-xdg-desktop-portal" = true; # doesn't work??
+  #   # just do this i guess
+  #   "widget.use-xdg-desktop-portal.file-picker" = 1;
+  #   "widget.use-xdg-desktop-portal.location" = 1;
+  #   "widget.use-xdg-desktop-portal.open-uri" = 1;
+  #   "widget.use-xdg-desktop-portal.mime-handler" = 1;
+  #   "widget.use-xdg-desktop-portal.settings" = 1;
+  # };
   programs.plasma = {
     enable = true;
 
