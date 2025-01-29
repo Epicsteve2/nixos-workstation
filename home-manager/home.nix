@@ -1,7 +1,5 @@
 { inputs, lib, config, pkgs, ... }: {
-  imports = [
-    inputs.plasma-manager.homeManagerModules.plasma-manager
-  ];
+  imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
   programs.home-manager.enable = true;
   home = {
@@ -23,9 +21,7 @@
 
   programs.plasma = {
     enable = true;
-    workspace = {
-      lookAndFeel = "org.kde.breezedark.desktop";
-    };
+    workspace = { lookAndFeel = "org.kde.breezedark.desktop"; };
     spectacle = {
       shortcuts = {
         captureRectangularRegion = "Print";
@@ -111,7 +107,6 @@
       allowUnfreePredicate = _: true;
     };
   };
-
 
   # reload system units when changing configs
   systemd.user.startServices = "sd-switch";

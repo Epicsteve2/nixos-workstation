@@ -1,8 +1,5 @@
-{ config, pkgs, lib, inputs, ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-  ];
+{ config, pkgs, lib, inputs, ... }: {
+  imports = [ ./hardware-configuration.nix ];
 
   nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
@@ -33,8 +30,8 @@
   programs.fish.enable = true;
   programs.kdeconnect.enable = true;
   xdg.portal.enable = true;
-# programs.ydotool.enable = true;
-# services.openssh.enable = true;
+  # programs.ydotool.enable = true;
+  # services.openssh.enable = true;
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
@@ -47,6 +44,8 @@
   environment.systemPackages = with pkgs; [
     ## Languages and development
     neovim
+    obs-studio
+    libqalculate
     nodejs
     python3
     comma
@@ -60,6 +59,9 @@
     go
 
     ## CLI
+    ksshaskpass
+    ffmpeg
+    # ffmpeg-full
     go-task
     distrobox
     miniserve
@@ -105,7 +107,7 @@
     kondo
 
     ## Desktop
-    gimp 
+    gimp
     peek
     copyq
     megasync
@@ -116,6 +118,11 @@
     vlc
     discord
     chromium
+    droidcam
+    # dolphin-emu 
+    # jdownloader # doesn't exist
+    # kdenlive 
+    # kdePackages.kmousetool 
     libreoffice
     wine
     winetricks
@@ -126,12 +133,12 @@
     slack
     virt-manager
     droidcam
-# # dust
-# # sysz
+    # # dust
+    # # sysz
     # nomacs 
     # # hexyl
     # qpdfview 
-# systemctl-tui
+    # systemctl-tui
     # noisetorch # maybe there's an alt?
     # helix 
     # antimicrox 
@@ -154,7 +161,6 @@
     # snap # not supported!!
     # inlyne # idk maybe not good
   ];
-
 
   nixpkgs.config.allowUnfree = true;
   users.defaultUserShell = pkgs.fish;
@@ -226,10 +232,7 @@
       "input"
       # "ydotool"
     ];
-    packages = with pkgs; [
-      kdePackages.kate
-      kdePackages.ksshaskpass
-    ];
+    packages = with pkgs; [ kdePackages.kate kdePackages.ksshaskpass ];
   };
   users.users.test = {
     isNormalUser = true;
@@ -248,7 +251,6 @@
   ## to add on desktop PC
   # services.displayManager.autoLogin.enable = true;
   # services.displayManager.autoLogin.user = "stephen";
-
 
   ## Some programs need SUID wrappers, can be configured further or are
   ## started in user sessions.
