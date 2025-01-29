@@ -43,98 +43,93 @@
   };
   environment.systemPackages = with pkgs; [
     ## Languages and development
-    neovim
-    obs-studio
-    libqalculate
-    nodejs
-    python3
-    comma
-    pnpm
-    terraform
     cargo
-    rustc
     gcc
-    vscode
-    nixfmt-classic
     go
+    libqalculate
+    neovim
+    nixfmt-classic
+    nodejs
+    obs-studio
+    pnpm
+    python3
+    rustc
+    terraform
+    vscode
 
     ## CLI
-    ksshaskpass
-    ffmpeg
-    # ffmpeg-full
-    go-task
-    distrobox
-    miniserve
-    eget
-    xclip
-    ksshaskpass
-    xdotool
-    wmctrl
-    chezmoi
-    fusuma
-    lazydocker
     alacritty
-    tmux
-    fzf
-    zsh
-    ripgrep
-    tealdeer
-    git
-    fastfetch
+    atuin
+    bat
+    bottom
+    chezmoi
+    comma
+    delta
+    distrobox
     dua
     duf
-    fd
+    eget
     eza
-    htop
-    bottom
-    bat
-    delta
-    gping
-    starship
-    zoxide
-    unzip
-    atuin
-    lazygit
+    fastfetch
+    fd
+    ffmpeg
+    # ffmpeg-full
+    fusuma
+    fzf
+    git
     gitui
-    wget
-    libnotify
-    atuin
-    yazi
-    just
+    go-task
+    gping
     gtrash
-    yt-dlp
-    onefetch
+    htop
+    just
+    kdePackages.ksshaskpass
     kondo
+    lazydocker
+    lazygit
+    libnotify
+    miniserve
+    onefetch
+    ripgrep
+    starship
+    tealdeer
+    tmux
+    unzip
+    wget
+    wmctrl
+    xclip
+    xdotool
+    yazi
+    yt-dlp
+    zoxide
 
     ## Desktop
-    gimp
-    peek
+    bruno
+    chromium
     copyq
+    discord
+    droidcam
+    gimp
+    libreoffice
     megasync
     mpv
+    peek
+    protontricks
+    protonup-qt
     qbittorrent
+    scrcpy
+    slack
     strawberry
-    bruno
+    thunderbird
+    virt-manager
     vlc
-    discord
-    chromium
-    droidcam
-    # dolphin-emu 
+    wine
+    winetricks
     # jdownloader # doesn't exist
     # kdenlive 
     # kdePackages.kmousetool 
-    libreoffice
-    wine
-    winetricks
-    protontricks
-    protonup-qt
-    scrcpy
-    thunderbird
-    slack
-    virt-manager
-    droidcam
-    # # dust
-    # # sysz
+    # dust
+    # sysz
     # nomacs 
     # # hexyl
     # qpdfview 
@@ -145,27 +140,21 @@
     # audacity 
     # steam
     # # bpython
-    # dolphin-emu 
-    # jdownloader
-    # kdenlive 
-    # kdePackages.kmousetool 
     # lutris
     ## for vim
     # wl-clipboard
-    ## for zsh-notify
     # retroarch 
     # telegram-desktop 
     # wireshark 
     # zoom-us 
     # flatpak 
-    # snap # not supported!!
     # inlyne # idk maybe not good
   ];
 
   nixpkgs.config.allowUnfree = true;
   users.defaultUserShell = pkgs.fish;
 
-  # this should go in hardware-configuration...
+  # this should go in hardware-configuration?
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
   boot.loader.grub = {
@@ -195,9 +184,9 @@
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
   services.xserver.enable = true;
+  services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.enable = false;
   services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasmax11";
   services.xserver.xkb = {
     layout = "us";
@@ -211,8 +200,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    ## If you want to use JACK applications, uncomment this
-    #jack.enable = true;
   };
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
@@ -232,16 +219,15 @@
       "input"
       # "ydotool"
     ];
-    packages = with pkgs; [ kdePackages.kate kdePackages.ksshaskpass ];
+    packages = with pkgs; [ kdePackages.kate ];
   };
   users.users.test = {
     isNormalUser = true;
     extraGroups =
       [ "networkmanager" "wheel" "docker" "libvirt" "uinput" "input" ];
-    password = "dt";
+    password = "h";
   };
 
-  ## more modern config is  `Default timestamp_type=global` but I can't get it to work...
   security.sudo.extraConfig = ''
     Defaults timestamp_type=global
   '';
