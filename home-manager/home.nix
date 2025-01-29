@@ -1,12 +1,14 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 { inputs, lib, config, pkgs, ... }: {
   imports = [
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-    # <plasma-manager/modules>
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
+
+  programs.home-manager.enable = true;
+  home = {
+    username = "stephen";
+    homeDirectory = "/home/stephen";
+  };
+
   ## disabling cuz i wanna test tis first
   # programs.firefox.profiles.default.settings = {
   #   "browser.tabs.tabMinWidth" = 200;
@@ -18,15 +20,11 @@
   #   "widget.use-xdg-desktop-portal.mime-handler" = 1;
   #   "widget.use-xdg-desktop-portal.settings" = 1;
   # };
+
   programs.plasma = {
     enable = true;
-
     workspace = {
-      # clickItemTo = "select";
       lookAndFeel = "org.kde.breezedark.desktop";
-      # cursor.theme = "Bibata-Modern-Ice";
-      # iconTheme = "Papirus-Dark";
-      # wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images/1080x1920.png";
     };
     spectacle = {
       shortcuts = {
@@ -38,13 +36,7 @@
       kwin = { "Grid View" = "Meta+Tab"; };
       "services/Alacritty.desktop" = { "_launch" = "Meta+T"; };
       "services/com.github.hluk.copyq.desktop" = { "_launch" = "Meta+V"; };
-
     };
-    ## doesn't rlly work
-    # input.touchpads = [{
-    #   disableWhileTyping = true;
-    #   enable = true;
-    # }]; 
     kwin = {
       virtualDesktops = {
         number = 9;
@@ -60,8 +52,12 @@
         };
       };
     };
-    # startup = { startupScript = { fusuma = { text = "fusuma"; }; }; };
-    ## this probably isn't worth it
+    ## doesn't really work
+    # input.touchpads = [{
+    #   disableWhileTyping = true;
+    #   enable = true;
+    # }]; 
+    ## this probably isn't worth configuring here
     # window-rules = {
     #   thunderbird = {
     #     match = {
@@ -74,24 +70,6 @@
     # };
   };
 
-  nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    config = {
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
-    };
-  };
   systemd = {
     user = {
       services = {
@@ -125,33 +103,17 @@
     };
   };
 
-  home = {
-    username = "stephen";
-    homeDirectory = "/home/stephen";
+  nixpkgs = {
+    overlays = [ ];
+    config = {
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
+    };
   };
 
-  ## maybe i should just copy the config folder...
-  # accounts = {
-  #   email = {
-  #     accounts = {
-  #       "work" = {
-  #         address = "stephenguo14@gmail.com";
-  #         flavor = "gmail.com";
-  #         thunderbird = { enable = true; };
-  #       };
-  #     };
-  #   };
-  # };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-
-  # Enable home-manager and git
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
-
-  # Nicely reload system units when changing configs
+  # reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

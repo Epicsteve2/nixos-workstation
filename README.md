@@ -1,13 +1,11 @@
-## NixOS Workstation
-setup guide:
-- basically just do https://nixos.wiki/wiki/Btrfs
-- add swap (can do after `nixos-enter`)
-- regenerate hardware-configuration by running `nixos-generate-config --show-hardware-config`
-- cp that into `hardware-configuration.nix`
-- run the flake command!
+# NixOS Workstation
+## Initial setup guide:
+- Setup filesystem. I used [this guide](https://nixos.wiki/wiki/Btrfs)
+  - I added a swap BTRFS subvolume as well (can do after running `nixos-enter` into the mounted partitions after installing)
+- regenerate hardware-configuration by running `nixos-generate-config --show-hardware-config` and copy to `./nixos/hardware-configuration.nix`
+- run the flake command: `nixos-rebuild switch --use-remote-sudo --flake .#asus-vivobook`
 
 ## Other setup
-- thunderbird
-  - `tar czfv thunder.tar.gz ~/.thunderbird/`
-  - `miniserve --hidden ~`
-  - run thunderbird and untar all files to the new profile in local `~/.thunderbird/ `
+- Thunderbird
+  - backup from old computer by running the command: `tar --create --gzip --verbose --file thunder.tar.gz ~/.thunderbird/`
+  - run Thunderbird once on the new computer and untar all files to the newly created profile at `~/.thunderbird/ `

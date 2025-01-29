@@ -1,20 +1,12 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, lib, inputs, ... }:
-# let 
-#   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-# in
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
   ];
 
   nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
-      # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
       # Opinionated: disable global registry
       flake-registry = "";
@@ -29,44 +21,57 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot =
-    true; # powers up the default Bluetooth controller on boot
-  # services.touchegg.enable = true;
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
-  # for home-manager, use programs.bash.initExtra instead
-  # programs.zsh.interactiveShellInit = ''
-  #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  # '';
+  # for dynamically linked libraries
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ ];
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "btrfs";
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
+  programs.fish.enable = true;
+  programs.kdeconnect.enable = true;
+  xdg.portal.enable = true;
+# programs.ydotool.enable = true;
+# services.openssh.enable = true;
+  # services.flatpak.enable = true;
+  services.kanata.enable = true;
+  services.kanata.package = pkgs.kanata-with-cmd;
+
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firefox";
   };
   environment.systemPackages = with pkgs; [
+    ## Languages and development
+    neovim
     nodejs
     python3
     comma
     pnpm
-    # nil
-    # xorg.xrandr # just for sddm
-    # unstable.neovim
-    neovim
-    chezmoi
-    fusuma
     terraform
-    lazydocker
-    # corepack
-    # ydotool
-    # touchegg
-    # rustup
     cargo
     rustc
-    alacritty
     gcc
+    vscode
+    nixfmt-classic
+    go
+
+    ## CLI
+    go-task
+    distrobox
+    miniserve
+    eget
+    xclip
+    ksshaskpass
+    xdotool
+    wmctrl
+    chezmoi
+    fusuma
+    lazydocker
+    alacritty
     tmux
     fzf
     zsh
@@ -89,102 +94,73 @@
     atuin
     lazygit
     gitui
-    nixfmt-classic
     wget
     libnotify
     atuin
     yazi
-    # trashy
     just
     gtrash
-
-    # # other programs that may be useless in VMs 
     yt-dlp
-    # obs 
-    # gimp 
-    peek
     onefetch
+    kondo
+
+    ## Desktop
+    gimp 
+    peek
     copyq
     megasync
-    # qalculate
-    # # dust
-    # # sysz
-    kondo
-    vscode
     mpv
-    # nomacs 
-    # # hexyl
-    # qpdfview 
     qbittorrent
     strawberry
-    # systemctl-tui
     bruno
-    # noisetorch # maybe there's an alt?
-    # micro 
     vlc
-    # helix 
-    # antimicrox 
-    # audacity 
     discord
-    # steam
-    # # bpython
     chromium
-    droidcam
-    # dolphin-emu 
-    # jdownloader
-    # kdenlive 
-    # kdePackages.kmousetool 
     libreoffice
-    # lutris
-    # for vim
-    # wl-clipboard
-    #  for zsh-notify
-    xdotool
-    wmctrl
     wine
     winetricks
     protontricks
     protonup-qt
-    # retroarch 
     scrcpy
     thunderbird
     slack
-    ksshaskpass
+    virt-manager
+    droidcam
+# # dust
+# # sysz
+    # nomacs 
+    # # hexyl
+    # qpdfview 
+# systemctl-tui
+    # noisetorch # maybe there's an alt?
+    # helix 
+    # antimicrox 
+    # audacity 
+    # steam
+    # # bpython
+    # dolphin-emu 
+    # jdownloader
+    # kdenlive 
+    # kdePackages.kmousetool 
+    # lutris
+    ## for vim
+    # wl-clipboard
+    ## for zsh-notify
+    # retroarch 
     # telegram-desktop 
     # wireshark 
     # zoom-us 
-    virt-manager
-    # docker
-    go-task
-    # trashy 
-    distrobox
-    # # flatpak 
-    # # snap # not supported!!
-    kanata-with-cmd
-    miniserve
-    eget
-    xclip
-    go
+    # flatpak 
+    # snap # not supported!!
     # inlyne # idk maybe not good
   ];
-  services.kanata.enable = true;
-  services.kanata.package = pkgs.kanata-with-cmd;
 
-  programs.kdeconnect.enable = true;
-  # services.flatpak.enable = true;
-  xdg.portal.enable = true;
 
-  programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
   users.defaultUserShell = pkgs.fish;
-  programs.zsh.enable = true;
-  programs.fish.enable = true;
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
+  # this should go in hardware-configuration...
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Bootloader.
   boot.loader.timeout = 10;
   boot.loader.grub = {
     enable = true;
@@ -209,7 +185,6 @@
   };
 
   networking.hostName = "asus-vivobook";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
@@ -218,16 +193,11 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.displayManager.defaultSession = "plasmax11";
-
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
-
-  # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -235,25 +205,16 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
+    ## If you want to use JACK applications, uncomment this
     #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
+  fonts.packages = with pkgs;
+    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
-  # for dynamically linked libraries
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs;
-    [
-
-    ];
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.stephen = {
     isNormalUser = true;
-    description = "stephen";
     useDefaultShell = false;
     shell = pkgs.zsh;
     extraGroups = [
@@ -268,55 +229,36 @@
     packages = with pkgs; [
       kdePackages.kate
       kdePackages.ksshaskpass
-      # thunderbird
     ];
   };
   users.users.test = {
     isNormalUser = true;
-    description = "test";
     extraGroups =
       [ "networkmanager" "wheel" "docker" "libvirt" "uinput" "input" ];
     password = "dt";
   };
 
-  # temp
+  ## more modern config is  `Default timestamp_type=global` but I can't get it to work...
+  security.sudo.extraConfig = ''
+    Defaults timestamp_type=global
+  '';
+  ## temp
+  security.sudo.wheelNeedsPassword = false;
+
+  ## to add on desktop PC
   # services.displayManager.autoLogin.enable = true;
   # services.displayManager.autoLogin.user = "stephen";
 
-  # Default timestamp_type=global
-  security.sudo.extraConfig = ''
-    Defaults !tty_tickets
-  '';
-  virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "btrfs";
-  security.sudo.wheelNeedsPassword = false;
-  # programs.ydotool.enable = true;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  ## Some programs need SUID wrappers, can be configured further or are
+  ## started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "24.11";
 
 }
