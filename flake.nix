@@ -1,6 +1,4 @@
 {
-  description = "I don't even know";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
@@ -20,9 +18,7 @@
       nixosConfigurations = {
         asus-vivobook = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./nixos/configuration.nix
-          ];
+          modules = [ ./nixos/configuration.nix ];
         };
       };
 

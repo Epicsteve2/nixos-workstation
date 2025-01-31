@@ -17,6 +17,7 @@
     registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
+  nixpkgs.config.allowUnfree = true;
 
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
@@ -29,30 +30,46 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
   programs.kdeconnect.enable = true;
-  xdg.portal.enable = true;
+  programs.neovim = {
+    defaultEditor = true;
+    enable = true;
+  };
+  programs.obs-studio.enable = true;
+  programs.git.enable = true;
+  programs.lazygit.enable = true;
+  programs.htop.enable = true;
+  programs.starship.enable = true;
+  programs.tmux.enable = true;
+  programs.yazi.enable = true;
+  programs.chromium.enable = true;
+  programs.droidcam.enable = true;
+  programs.steam.protontricks.enable = true;
+  programs.thunderbird.enable = true;
+  programs.virt-manager.enable = true;
+  # programs.steam.enable = true;
+  # programs.wireshark.enable = true;
+  # programs.noisetorch.enable
   # programs.ydotool.enable = true;
   # services.openssh.enable = true;
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
+  xdg.portal.enable = true;
 
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    BROWSER = "firefox";
-  };
+  environment.variables = { BROWSER = "firefox"; };
   environment.systemPackages = with pkgs; [
     ## Languages and development
     cargo
     gcc
     go
+    kdePackages.kate
     libqalculate
     neovim
-    nixfmt-classic
+    nixfmt-rfc-style
     nodejs
-    obs-studio
     pnpm
     python3
+    python312Packages.bpython
     rustc
     terraform
     vscode
@@ -76,83 +93,65 @@
     # ffmpeg-full
     fusuma
     fzf
-    git
     gitui
     go-task
     gping
     gtrash
-    htop
+    helix
+    hexyl
+    inlyne
     just
     kdePackages.ksshaskpass
     kondo
     lazydocker
-    lazygit
     libnotify
     miniserve
     onefetch
     ripgrep
-    starship
+    systemctl-tui
+    sysz
     tealdeer
-    tmux
     unzip
     wget
     wmctrl
     xclip
     xdotool
-    yazi
     yt-dlp
     zoxide
 
     ## Desktop
     bruno
-    chromium
     copyq
     discord
-    droidcam
     gimp
     libreoffice
     megasync
     mpv
+    nomacs
     peek
-    protontricks
     protonup-qt
     qbittorrent
+    qpdfview
     scrcpy
     slack
     strawberry
-    thunderbird
-    virt-manager
     vlc
     wine
     winetricks
     # jdownloader # doesn't exist
-    # kdenlive 
+    # kdePackages.kdenlive 
     # kdePackages.kmousetool 
     # dust
-    # sysz
-    # nomacs 
-    # # hexyl
-    # qpdfview 
-    # systemctl-tui
-    # noisetorch # maybe there's an alt?
-    # helix 
     # antimicrox 
     # audacity 
-    # steam
-    # # bpython
     # lutris
     ## for vim
     # wl-clipboard
-    # retroarch 
+    # retroarch # there's also services.xserver.desktopManager.retroarch.enable
     # telegram-desktop 
     # wireshark 
     # zoom-us 
-    # flatpak 
-    # inlyne # idk maybe not good
   ];
-
-  nixpkgs.config.allowUnfree = true;
-  users.defaultUserShell = pkgs.fish;
 
   # this should go in hardware-configuration?
   boot.loader.efi.canTouchEfiVariables = true;
@@ -206,6 +205,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  users.defaultUserShell = pkgs.fish;
   users.users.stephen = {
     isNormalUser = true;
     useDefaultShell = false;
@@ -219,7 +219,7 @@
       "input"
       # "ydotool"
     ];
-    packages = with pkgs; [ kdePackages.kate ];
+    packages = with pkgs; [ ];
   };
   users.users.test = {
     isNormalUser = true;
