@@ -1,22 +1,32 @@
-{ config, pkgs, lib, inputs, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
   imports = [ ./hardware-configuration.nix ];
 
-  nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-    };
-    # Opinionated: disable channels
-    channel.enable = false;
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+      };
+      # Opinionated: disable channels
+      channel.enable = false;
 
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+    };
   nixpkgs.config.allowUnfree = true;
 
   programs.command-not-found.enable = false;
@@ -56,7 +66,9 @@
   services.kanata.package = pkgs.kanata-with-cmd;
   xdg.portal.enable = true;
 
-  environment.variables = { BROWSER = "firefox"; };
+  environment.variables = {
+    BROWSER = "firefox";
+  };
   environment.systemPackages = with pkgs; [
     ## Languages and development
     cargo
@@ -139,18 +151,18 @@
     wine
     winetricks
     # jdownloader # doesn't exist
-    # kdePackages.kdenlive 
-    # kdePackages.kmousetool 
+    # kdePackages.kdenlive
+    # kdePackages.kmousetool
     # dust
-    # antimicrox 
-    # audacity 
+    # antimicrox
+    # audacity
     # lutris
     ## for vim
     # wl-clipboard
     # retroarch # there's also services.xserver.desktopManager.retroarch.enable
-    # telegram-desktop 
-    # wireshark 
-    # zoom-us 
+    # telegram-desktop
+    # wireshark
+    # zoom-us
   ];
 
   # this should go in hardware-configuration?
@@ -200,8 +212,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
@@ -223,8 +234,14 @@
   };
   users.users.test = {
     isNormalUser = true;
-    extraGroups =
-      [ "networkmanager" "wheel" "docker" "libvirt" "uinput" "input" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirt"
+      "uinput"
+      "input"
+    ];
     password = "h";
   };
 

@@ -1,4 +1,11 @@
-{ inputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
   programs.home-manager.enable = true;
@@ -21,7 +28,9 @@
 
   programs.plasma = {
     enable = true;
-    workspace = { lookAndFeel = "org.kde.breezedark.desktop"; };
+    workspace = {
+      lookAndFeel = "org.kde.breezedark.desktop";
+    };
     spectacle = {
       shortcuts = {
         captureRectangularRegion = "Print";
@@ -29,9 +38,15 @@
       };
     };
     shortcuts = {
-      kwin = { "Grid View" = "Meta+Tab"; };
-      "services/Alacritty.desktop" = { "_launch" = "Meta+T"; };
-      "services/com.github.hluk.copyq.desktop" = { "_launch" = "Meta+V"; };
+      kwin = {
+        "Grid View" = "Meta+Tab";
+      };
+      "services/Alacritty.desktop" = {
+        "_launch" = "Meta+T";
+      };
+      "services/com.github.hluk.copyq.desktop" = {
+        "_launch" = "Meta+V";
+      };
     };
     kwin = {
       virtualDesktops = {
@@ -52,7 +67,7 @@
     # input.touchpads = [{
     #   disableWhileTyping = true;
     #   enable = true;
-    # }]; 
+    # }];
     ## this probably isn't worth configuring here
     # window-rules = {
     #   thunderbird = {
@@ -75,25 +90,36 @@
             Documentation = "https://github.com/jtroo/kanata";
           };
           Service = {
-            Environment = [ "DISPLAY=:0" "PATH=/run/current-system/sw/bin" ];
-            ExecStart =
-              "/run/current-system/sw/bin/kanata --cfg /home/stephen/.config/kanata/asus-laptop.kbd";
+            Environment = [
+              "DISPLAY=:0"
+              "PATH=/run/current-system/sw/bin"
+            ];
+            ExecStart = "/run/current-system/sw/bin/kanata --cfg /home/stephen/.config/kanata/asus-laptop.kbd";
             Type = "simple";
             Restart = "no";
           };
-          Install = { WantedBy = [ "plasma-workspace.target" ]; };
+          Install = {
+            WantedBy = [ "plasma-workspace.target" ];
+          };
         };
 
         fusuma = {
-          Unit = { Description = "Touchpad gestures"; };
+          Unit = {
+            Description = "Touchpad gestures";
+          };
           Service = {
             Type = "simple";
             Restart = "no";
             ExecStart = "/run/current-system/sw/bin/fusuma";
-            Environment = [ "DISPLAY=:0" "PATH=/run/current-system/sw/bin" ];
+            Environment = [
+              "DISPLAY=:0"
+              "PATH=/run/current-system/sw/bin"
+            ];
             KillMode = "process";
           };
-          Install = { WantedBy = [ "plasma-workspace.target" ]; };
+          Install = {
+            WantedBy = [ "plasma-workspace.target" ];
+          };
         };
       };
     };

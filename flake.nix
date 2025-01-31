@@ -12,9 +12,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, plasma-manager, ... }@inputs:
-    let inherit (self) outputs;
-    in {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      plasma-manager,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+    in
+    {
       nixosConfigurations = {
         asus-vivobook = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
@@ -24,8 +33,7 @@
 
       homeConfigurations = {
         "stephen@asus-vivobook" = home-manager.lib.homeManagerConfiguration {
-          pkgs =
-            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             ./home-manager/home.nix
