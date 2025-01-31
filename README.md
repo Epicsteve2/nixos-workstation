@@ -11,7 +11,10 @@ I just followed [Misterio77/nix-starter-configs](https://github.com/Misterio77/n
 - switch user and run home-manager
 
 ## Other setup
-
+- Plasma
+  - setup new activity
+  - configure trackpad and mouse
+  - import window rules
 - Thunderbird
   - backup from old computer by running the command: `tar --create --gzip --verbose --file thunder.tar.gz ~/.thunderbird/`
   - run Thunderbird once on the new computer and untar all files to the newly created profile at `~/.thunderbird/`
