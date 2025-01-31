@@ -63,8 +63,8 @@
   # programs.ydotool.enable = true;
   # services.openssh.enable = true;
   # services.flatpak.enable = true;
-  services.kanata.enable = true;
-  services.kanata.package = pkgs.kanata-with-cmd;
+  # services.kanata.enable = true;
+  # services.kanata.package = pkgs.kanata-with-cmd;
   xdg.portal.enable = true;
 
   environment.variables = {
@@ -114,6 +114,7 @@
     hexyl
     inlyne
     just
+    kanata-with-cmd
     kdePackages.ksshaskpass
     kondo
     lazydocker
