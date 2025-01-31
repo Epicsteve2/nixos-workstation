@@ -31,11 +31,12 @@
 
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
-  # for dynamically linked libraries
-  programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true; # for dynamically linked libraries
   programs.nix-ld.libraries = with pkgs; [ ];
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.libvirtd.enable = true; # todo https://nixos.wiki/wiki/Virt-manager
+  virtualisation.spiceUSBRedirection.enable = true;
   programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.fish.enable = true;
@@ -153,10 +154,10 @@
     # jdownloader # doesn't exist
     # kdePackages.kdenlive
     # kdePackages.kmousetool
-    # dust
     # antimicrox
     # audacity
     # lutris
+    # dust
     ## for vim
     # wl-clipboard
     # retroarch # there's also services.xserver.desktopManager.retroarch.enable
@@ -196,9 +197,14 @@
   i18n.defaultLocale = "en_CA.UTF-8";
   services.xserver.enable = true;
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "plasmax11";
+  services.displayManager = {
+    defaultSession = "plasmax11";
+    sddm = {
+      wayland.enable = false;
+      enable = true;
+      autoNumlock = true;
+    };
+  };
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -225,7 +231,7 @@
       "networkmanager"
       "wheel"
       "docker"
-      "libvirt"
+      "libvirtd"
       "uinput"
       "input"
       # "ydotool"
@@ -238,7 +244,7 @@
       "networkmanager"
       "wheel"
       "docker"
-      "libvirt"
+      "libvirtd"
       "uinput"
       "input"
     ];
