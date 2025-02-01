@@ -48,6 +48,7 @@
       "services/Alacritty.desktop"."_launch" = "Meta+T";
       "services/com.github.hluk.copyq.desktop"."_launch" = "Meta+V";
       plasmashell."next activity" = "Meta+Shift+Tab";
+      ksmserver."Log Out" = "Meta+Shift+E";
     };
     kwin = {
       virtualDesktops = {
@@ -112,78 +113,12 @@
             WantedBy = [ "plasma-workspace.target" ];
           };
         };
-
-        # tmux = {
-        #   Unit = {
-        #     Description = "tmux server";
-        #   };
-        #   Service = {
-        #     # User = "stephen";
-        #     Type = "simple";
-        #     ExecStart = "/run/current-system/sw/bin/tmux new-session -d";
-        #     # ExecStart = "/run/current-system/sw/bin/tmux start-server";
-        #   };
-        #   Install = {
-        #     WantedBy = [ "plasma-workspace.target" ];
-        #   };
-        # };
-        # tmux = {
-        #   Unit = {
-        #     Description = "tmux server";
-        #   };
-        #   Service = {
-        #     # User = "stephen";
-        #     Type = "forking";
-        #     ExecStart = "/run/current-system/sw/bin/tmux -v new-session -d";
-        #     WorkingDirectory = "/home/stephen/";
-        #     Environment = [
-        #       "DISPLAY=:0"
-        #       "PATH=/usr/bin/"
-        #     ];
-        #     ExecStop = [
-        #       "/home/stephen/.config/tmux/plugins/tmux-resurrect/scripts/save.sh"
-        #       "/run/current-system/sw/bin/tmux kill-server"
-        #     ];
-        #     KillMode = "control-group";
-        #     RestartSec = 2;
-        #   };
-        #   Install = {
-        #     WantedBy = [ "plasma-workspace.target" ];
-        #   };
-        # };
-
-        ## Doesn't work. Starts up with graphical glitches
-        # thunderbird = {
-        #   Unit = {
-        #     Description = "Email client";
-        #   };
-        #   Service = {
-        #     Type = "simple";
-        #     ExecStart = "/run/current-system/sw/bin/thunderbird";
-        #   };
-        #   Install = {
-        #     WantedBy = [ "plasma-workspace.target" ];
-        #   };
-        # };
-
-        # strawberry = {
-        #   Unit = {
-        #     Description = "Music player";
-        #   };
-        #   Service = {
-        #     Type = "simple";
-        #     ExecStart = "/run/current-system/sw/bin/strawberry";
-        #   };
-        #   Install = {
-        #     WantedBy = [ "plasma-workspace.target" ];
-        #   };
-        # };
       };
     };
   };
 
-  ## reload system units when changing configs. Commented out because I don't think I'd need it
-  # systemd.user.startServices = "sd-switch";
+  # reload system units when changing configs.
+  systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";

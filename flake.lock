@@ -64,7 +64,20 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "plasma-manager": "plasma-manager"
+        "plasma-manager": "plasma-manager",
+        "sddm-wallpaper": "sddm-wallpaper"
+      }
+    },
+    "sddm-wallpaper": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-lI9uEsEN848kjooPduXa0k/C0ypikNZ/+jlp+Ne5N4c=",
+        "type": "file",
+        "url": "file:///home/stephen/Downloads/best-laptop-wallpaper.png"
+      },
+      "original": {
+        "type": "file",
+        "url": "file:///home/stephen/Downloads/best-laptop-wallpaper.png"
       }
     }
   },

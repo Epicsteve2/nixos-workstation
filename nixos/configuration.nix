@@ -28,6 +28,12 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
   nixpkgs.config.allowUnfree = true;
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      disableWhileTyping = true;
+    };
+  };
 
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
@@ -69,6 +75,7 @@
 
   environment.variables = {
     BROWSER = "firefox";
+    MOZ_USE_XINPUT2 = 1; # for pinch to zoom and smooth scrolling
   };
   environment.systemPackages = with pkgs; [
     ## Languages and development
@@ -166,6 +173,10 @@
     # telegram-desktop
     # wireshark
     # zoom-us
+    (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+      [General]
+      background = ${inputs.sddm-wallpaper}
+    '')
   ];
 
   # this should go in hardware-configuration?
@@ -203,7 +214,8 @@
     defaultSession = "plasmax11";
     sddm = {
       wayland.enable = false;
-      enable = true;
+      enable = lib.mkDefault true;
+      theme = "breeze";
       autoNumlock = true;
     };
   };

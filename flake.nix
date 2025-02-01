@@ -10,6 +10,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    sddm-wallpaper = {
+      url = "file:///home/stephen/Downloads/best-laptop-wallpaper.png";
+      flake = false;
+    };
   };
 
   outputs =
