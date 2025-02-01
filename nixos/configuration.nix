@@ -265,6 +265,19 @@
     password = "h";
   };
 
+  users.users.test2 = {
+    isNormalUser = true;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirtd"
+      "uinput"
+      "input"
+    ];
+    password = "h";
+  };
+
   security.sudo.extraConfig = ''
     Defaults timestamp_type=global
   '';

@@ -41,15 +41,18 @@
       shortcuts = {
         captureRectangularRegion = "Print";
         captureCurrentMonitor = "Meta+Print";
+        launchWithoutCapturing = "Meta+Shift+Print";
       };
     };
     shortcuts = {
+      "services/systemsettings.desktop"."_launch" = "Meta+I";
       kwin."Grid View" = "Meta+Tab";
       "services/Alacritty.desktop"."_launch" = "Meta+T";
       "services/com.github.hluk.copyq.desktop"."_launch" = "Meta+V";
+      plasmashell."show-on-mouse-pos" = "Meta+Shift+V";
       plasmashell."next activity" = "Meta+Shift+Tab";
       ksmserver."Log Out" = "Meta+Shift+E";
-      kwin."Edit Tiles" = "";
+      kwin."Edit Tiles" = "Meta+Shift+T";
     };
     kwin = {
       virtualDesktops = {
@@ -59,6 +62,8 @@
     };
     configFile = {
       kwinrc = {
+        "Plugins"."desktopchangeosdEnabled" = true;
+        "Script-desktopchangeosd"."PopupHideDelay" = 250;
         Windows = {
           "BorderlessMaximizedWindows" = true;
           "FocusPolicy" = "FocusFollowsMouse";
