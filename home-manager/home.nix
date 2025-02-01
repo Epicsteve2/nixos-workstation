@@ -113,46 +113,71 @@
           };
         };
 
-        tmux = {
-          Unit = {
-            Description = "tmux server";
-          };
-          Service = {
-            Type = "forking";
-            ExecStart = "/run/current-system/sw/bin/tmux new-session -d";
-            WorkingDirectory = "~";
-            # ExecStop = "/run/current-system/sw/bin/tmux kill-session";
-          };
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
-        };
+        # tmux = {
+        #   Unit = {
+        #     Description = "tmux server";
+        #   };
+        #   Service = {
+        #     # User = "stephen";
+        #     Type = "simple";
+        #     ExecStart = "/run/current-system/sw/bin/tmux new-session -d";
+        #     # ExecStart = "/run/current-system/sw/bin/tmux start-server";
+        #   };
+        #   Install = {
+        #     WantedBy = [ "plasma-workspace.target" ];
+        #   };
+        # };
+        # tmux = {
+        #   Unit = {
+        #     Description = "tmux server";
+        #   };
+        #   Service = {
+        #     # User = "stephen";
+        #     Type = "forking";
+        #     ExecStart = "/run/current-system/sw/bin/tmux -v new-session -d";
+        #     WorkingDirectory = "/home/stephen/";
+        #     Environment = [
+        #       "DISPLAY=:0"
+        #       "PATH=/usr/bin/"
+        #     ];
+        #     ExecStop = [
+        #       "/home/stephen/.config/tmux/plugins/tmux-resurrect/scripts/save.sh"
+        #       "/run/current-system/sw/bin/tmux kill-server"
+        #     ];
+        #     KillMode = "control-group";
+        #     RestartSec = 2;
+        #   };
+        #   Install = {
+        #     WantedBy = [ "plasma-workspace.target" ];
+        #   };
+        # };
 
-        thunderbird = {
-          Unit = {
-            Description = "Email client";
-          };
-          Service = {
-            Type = "simple";
-            ExecStart = "/run/current-system/sw/bin/thunderbird";
-          };
-          Install = {
-            WantedBy = [ "plasma-workspace.target" ];
-          };
-        };
+        ## Doesn't work. Starts up with graphical glitches
+        # thunderbird = {
+        #   Unit = {
+        #     Description = "Email client";
+        #   };
+        #   Service = {
+        #     Type = "simple";
+        #     ExecStart = "/run/current-system/sw/bin/thunderbird";
+        #   };
+        #   Install = {
+        #     WantedBy = [ "plasma-workspace.target" ];
+        #   };
+        # };
 
-        strawberry = {
-          Unit = {
-            Description = "Music player";
-          };
-          Service = {
-            Type = "simple";
-            ExecStart = "/run/current-system/sw/bin/strawberry";
-          };
-          Install = {
-            WantedBy = [ "plasma-workspace.target" ];
-          };
-        };
+        # strawberry = {
+        #   Unit = {
+        #     Description = "Music player";
+        #   };
+        #   Service = {
+        #     Type = "simple";
+        #     ExecStart = "/run/current-system/sw/bin/strawberry";
+        #   };
+        #   Install = {
+        #     WantedBy = [ "plasma-workspace.target" ];
+        #   };
+        # };
       };
     };
   };

@@ -152,6 +152,7 @@
     vlc
     wine
     winetricks
+    xdg-user-dirs
     # jdownloader # doesn't exist
     # kdePackages.kdenlive
     # kdePackages.kmousetool
