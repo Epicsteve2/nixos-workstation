@@ -49,6 +49,7 @@
       "services/com.github.hluk.copyq.desktop"."_launch" = "Meta+V";
       plasmashell."next activity" = "Meta+Shift+Tab";
       ksmserver."Log Out" = "Meta+Shift+E";
+      kwin."Edit Tiles" = "";
     };
     kwin = {
       virtualDesktops = {

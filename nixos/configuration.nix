@@ -252,7 +252,7 @@
     ];
     packages = with pkgs; [ ];
   };
-  users.users.test = {
+  users.users.test1 = {
     isNormalUser = true;
     extraGroups = [
       "networkmanager"
