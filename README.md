@@ -1,7 +1,7 @@
 # NixOS Workstation
 I just followed [Misterio77/nix-starter-configs](https://github.com/Misterio77/nix-starter-configs)
 
-## Initial setup guide
+## Install commands
 
 - Setup filesystem. I used [this guide](https://nixos.wiki/wiki/Btrfs)
   - I added a swap BTRFS subvolume as well (can do after running `nixos-enter` into the mounted partitions after installing)
@@ -11,6 +11,7 @@ I just followed [Misterio77/nix-starter-configs](https://github.com/Misterio77/n
 - switch user and run home-manager
 
 ## Other setup
+- [dotfiles](https://github.com/Epicsteve2/dotfiles) using [`chezmoi`](https://www.chezmoi.io/)
 - Plasma
   - setup new activity
   - import window rules
