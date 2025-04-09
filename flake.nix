@@ -21,7 +21,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
       plasma-manager,
       ...
@@ -30,17 +29,10 @@
       inherit (self) outputs;
     in
     {
+      overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = {
         asus-vivobook = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-
-            ## found from https://nixos-and-flakes.thiscute.world/nixos-with-flakes/downgrade-or-upgrade-packages
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
-          };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./nixos/configuration.nix ];
         };
       };

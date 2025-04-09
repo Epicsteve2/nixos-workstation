@@ -3,7 +3,7 @@
   pkgs,
   lib,
   inputs,
-  pkgs-unstable,
+  outputs,
   ...
 }:
 {
@@ -28,7 +28,10 @@
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    overlays = [ outputs.overlays.unstable-packages ];
+    config.allowUnfree = true;
+  };
   services.libinput = {
     enable = true;
     touchpad = {
@@ -97,7 +100,6 @@
     vscode
 
     ## CLI
-    pkgs-unstable.quickemu
     alacritty
     atuin
     bat
@@ -112,8 +114,7 @@
     eza
     fastfetch
     fd
-    ffmpeg
-    # ffmpeg-full
+    ffmpeg-full
     fusuma
     fzf
     gitui
@@ -135,17 +136,20 @@
     systemctl-tui
     sysz
     tealdeer
+    unstable.quickemu
     unzip
-    zip
     wget
     wmctrl
     xclip
     xdotool
     yt-dlp
+    zip
     zoxide
 
     ## Desktop
+    audacity
     bruno
+    chromium
     copyq
     dbeaver-bin
     discord
@@ -166,12 +170,10 @@
     winetricks
     xdg-user-dirs
     zoom-us
-    chromium
     # jdownloader # doesn't exist
     # kdePackages.kdenlive
     # kdePackages.kmousetool
     # antimicrox
-    audacity
     # lutris
     # dust
     ## for vim

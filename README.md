@@ -26,3 +26,5 @@ I just followed [Misterio77/nix-starter-configs](https://github.com/Misterio77/n
 - mpv plugins
 - megasync
 - retroarch
+- fix chezmoi
+- maybe switch back to zinit
