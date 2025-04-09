@@ -3,6 +3,7 @@
   pkgs,
   lib,
   inputs,
+  pkgs-unstable,
   ...
 }:
 {
@@ -58,11 +59,12 @@
   programs.starship.enable = true;
   programs.tmux.enable = true;
   programs.yazi.enable = true;
-  programs.chromium.enable = true;
+  programs.chromium.enable = true; # need to add in systemPackages too
   programs.droidcam.enable = true;
   programs.steam.protontricks.enable = true;
   programs.thunderbird.enable = true;
   programs.virt-manager.enable = true;
+  programs.adb.enable = true;
   # programs.steam.enable = true;
   # programs.wireshark.enable = true;
   # programs.noisetorch.enable
@@ -95,6 +97,7 @@
     vscode
 
     ## CLI
+    pkgs-unstable.quickemu
     alacritty
     atuin
     bat
@@ -133,6 +136,7 @@
     sysz
     tealdeer
     unzip
+    zip
     wget
     wmctrl
     xclip
@@ -143,6 +147,7 @@
     ## Desktop
     bruno
     copyq
+    dbeaver-bin
     discord
     gimp
     libreoffice
@@ -160,11 +165,13 @@
     wine
     winetricks
     xdg-user-dirs
+    zoom-us
+    chromium
     # jdownloader # doesn't exist
     # kdePackages.kdenlive
     # kdePackages.kmousetool
     # antimicrox
-    # audacity
+    audacity
     # lutris
     # dust
     ## for vim
@@ -172,7 +179,6 @@
     # retroarch # there's also services.xserver.desktopManager.retroarch.enable
     # telegram-desktop
     # wireshark
-    # zoom-us
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
       background = ${inputs.sddm-wallpaper}
@@ -180,6 +186,7 @@
   ];
 
   # this should go in hardware-configuration?
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
   boot.loader.grub = {
@@ -231,6 +238,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    # jack.enable = true;
   };
   fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
   hardware.bluetooth.enable = true;
@@ -248,6 +256,7 @@
       "libvirtd"
       "uinput"
       "input"
+      "adbusers"
       # "ydotool"
     ];
     packages = with pkgs; [ ];
