@@ -42,7 +42,7 @@
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
   programs.nix-ld.enable = true; # for dynamically linked libraries
-  programs.nix-ld.libraries = with pkgs; [ ];
+  programs.nix-ld.libraries = with pkgs; [ glibc_multi ];
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.libvirtd.enable = true; # todo https://nixos.wiki/wiki/Virt-manager
@@ -86,6 +86,7 @@
     ## Languages and development
     cargo
     gcc
+    # glibc # for puppeteer
     go
     kdePackages.kate
     libqalculate
@@ -215,6 +216,7 @@
 
   networking.hostName = "asus-vivobook";
   networking.networkmanager.enable = true;
+  networking.firewall.enable = false;
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
   services.xserver.enable = true;
