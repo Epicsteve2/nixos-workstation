@@ -85,8 +85,8 @@
   environment.systemPackages = with pkgs; [
     ## Languages and development
     cargo
+    code-cursor
     gcc
-    # glibc # for puppeteer
     go
     kdePackages.kate
     libqalculate
