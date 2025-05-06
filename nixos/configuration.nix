@@ -42,7 +42,7 @@
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
   programs.nix-ld.enable = true; # for dynamically linked libraries
-  programs.nix-ld.libraries = with pkgs; [ glibc_multi ];
+  programs.nix-ld.libraries = with pkgs; [ ];
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.libvirtd.enable = true; # todo https://nixos.wiki/wiki/Virt-manager
@@ -125,6 +125,7 @@
     helix
     hexyl
     inlyne
+    jq
     just
     kanata-with-cmd
     kdePackages.ksshaskpass
