@@ -42,7 +42,46 @@
   programs.command-not-found.enable = false;
   programs.nix-index.enable = true;
   programs.nix-ld.enable = true; # for dynamically linked libraries
-  programs.nix-ld.libraries = with pkgs; [ ];
+  # chrome dependencies
+  # found with the script at https://www.rugu.dev/en/blog/nixos-precompiled/
+  programs.nix-ld.libraries = with pkgs; [
+    alsa-lib
+    alsa-lib-with-plugins
+    at-spi2-atk
+    cairo
+    cups
+    dbus
+    # driversi686Linux.mesa # gives error /home/stephen/.cache/puppeteer/chrome/linux-134.0.6998.35/chrome-linux64/chrome: error while loading shared libraries: libgbm.so.1: wrong ELF class: ELFCLASS32
+    eudev
+    expat
+    ghdl-gcc
+    glamoroustoolkit
+    glib
+    glibc
+    glibc_memusage
+    glibc_multi
+    libgcc
+    libudev-zero
+    libxkbcommon
+    mesa
+    nspr
+    nss
+    nss_latest
+    pango
+    saw-tools
+    systemd
+    systemdLibs
+    systemdMinimal
+    systemdUkify
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXrandr
+    xorg.libxcb
+    xorg_sys_opengl
+  ];
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.libvirtd.enable = true; # todo https://nixos.wiki/wiki/Virt-manager
@@ -85,12 +124,12 @@
   environment.systemPackages = with pkgs; [
     ## Languages and development
     cargo
-    code-cursor
+    unstable.code-cursor
     gcc
     go
     kdePackages.kate
     libqalculate
-    neovim
+    unstable.neovim
     nixfmt-rfc-style
     nodejs
     pnpm
@@ -98,7 +137,7 @@
     python312Packages.bpython
     rustc
     terraform
-    vscode
+    unstable.vscode
 
     ## CLI
     alacritty
@@ -153,7 +192,7 @@
     bruno
     chromium
     copyq
-    dbeaver-bin
+    unstable.dbeaver-bin
     discord
     gimp
     libreoffice
