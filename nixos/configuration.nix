@@ -54,7 +54,7 @@
     # driversi686Linux.mesa # gives error /home/stephen/.cache/puppeteer/chrome/linux-134.0.6998.35/chrome-linux64/chrome: error while loading shared libraries: libgbm.so.1: wrong ELF class: ELFCLASS32
     eudev
     expat
-    ghdl-gcc
+    # ghdl-gcc # doesn't seem to work on 25.05
     glamoroustoolkit
     glib
     glibc
@@ -115,6 +115,7 @@
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
+  services.lorri.enable = true;
   xdg.portal.enable = true;
 
   environment.variables = {
@@ -124,6 +125,7 @@
   environment.systemPackages = with pkgs; [
     ## Languages and development
     cargo
+    direnv
     unstable.code-cursor
     gcc
     go
@@ -137,6 +139,7 @@
     python312Packages.bpython
     rustc
     terraform
+    typst
     unstable.vscode
 
     ## CLI
@@ -275,7 +278,7 @@
     variant = "";
   };
   services.printing.enable = true;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -284,7 +287,9 @@
     pulse.enable = true;
     # jack.enable = true;
   };
-  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+  ];
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 

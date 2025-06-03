@@ -29,6 +29,8 @@
     "widget.use-xdg-desktop-portal.open-uri" = 1;
     "widget.use-xdg-desktop-portal.mime-handler" = 1;
     "widget.use-xdg-desktop-portal.settings" = 1;
+    "browser.gesture.swipe.left" = "";
+    "browser.gesture.swipe.right" = "";
   };
   services.copyq.enable = true;
 
