@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-24-11,
   lib,
   inputs,
   outputs,
@@ -51,15 +52,18 @@
     cairo
     cups
     dbus
-    # driversi686Linux.mesa # gives error /home/stephen/.cache/puppeteer/chrome/linux-134.0.6998.35/chrome-linux64/chrome: error while loading shared libraries: libgbm.so.1: wrong ELF class: ELFCLASS32
+    # actually now idk if this is needed
+    driversi686Linux.mesa # gives error /home/stephen/.cache/puppeteer/chrome/linux-134.0.6998.35/chrome-linux64/chrome: error while loading shared libraries: libgbm.so.1: wrong ELF class: ELFCLASS32
     eudev
     expat
     # ghdl-gcc # doesn't seem to work on 25.05
+    pkgs-24-11.ghdl-gcc
     glamoroustoolkit
     glib
     glibc
     glibc_memusage
     glibc_multi
+    libgbm # this never showed up in the script i used. maybe nix-index is outdated?
     libgcc
     libudev-zero
     libxkbcommon
