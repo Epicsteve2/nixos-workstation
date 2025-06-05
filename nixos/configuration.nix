@@ -137,6 +137,7 @@
     libqalculate
     unstable.neovim
     nixfmt-rfc-style
+    inputs.nix-alien.packages.${pkgs.system}.nix-alien
     nodejs
     pnpm
     python3

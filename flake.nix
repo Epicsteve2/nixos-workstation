@@ -1,5 +1,6 @@
 {
   inputs = {
+    nix-alien.url = "github:thiagokokada/nix-alien";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -25,6 +26,7 @@
       nixpkgs-24-11,
       home-manager,
       plasma-manager,
+      nix-alien,
       ...
     }@inputs:
     let
@@ -34,6 +36,8 @@
       overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = {
         asus-vivobook = nixpkgs.lib.nixosSystem {
+
+          system = "x86_64-linux";
           specialArgs = {
             inherit inputs outputs;
             pkgs-24-11 = import nixpkgs-24-11 {
