@@ -128,8 +128,11 @@
   };
   environment.systemPackages = with pkgs; [
     ## Languages and development
+    act
+    azure-cli
     cargo
     direnv
+    dive
     unstable.code-cursor
     gcc
     go
