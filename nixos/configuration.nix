@@ -114,7 +114,7 @@
   # programs.steam.enable = true;
   # programs.wireshark.enable = true;
   # programs.noisetorch.enable
-  # programs.ydotool.enable = true;
+  programs.ydotool.enable = true;
   # services.openssh.enable = true;
   # services.flatpak.enable = true;
   services.kanata.enable = true;
@@ -141,12 +141,14 @@
     unstable.neovim
     nixfmt-rfc-style
     inputs.nix-alien.packages.${pkgs.system}.nix-alien
+    inputs.inputactions.packages.${pkgs.system}.inputactions-kwin
     nodejs
     pnpm
     python3
     python312Packages.bpython
     rustc
     terraform
+    texliveMedium
     typst
     unstable.vscode
 
@@ -314,7 +316,7 @@
       "uinput"
       "input"
       "adbusers"
-      # "ydotool"
+      "ydotool"
     ];
     packages = with pkgs; [ ];
   };

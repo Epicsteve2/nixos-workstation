@@ -36,6 +36,27 @@
         "type": "github"
       }
     },
+    "inputactions": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1754297983,
+        "narHash": "sha256-5anzj4Ghl++V/sNpbUwrB5DFzYYsaYwK4fbh1HotkCU=",
+        "owner": "taj-ny",
+        "repo": "InputActions",
+        "rev": "5c2a584a82d4c95c1c028c36b0c747f377cc338a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "taj-ny",
+        "repo": "InputActions",
+        "type": "github"
+      }
+    },
     "nix-alien": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -167,6 +188,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "inputactions": "inputactions",
         "nix-alien": "nix-alien",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-24-11": "nixpkgs-24-11",
@@ -185,6 +207,39 @@
       "original": {
         "type": "file",
         "url": "file:///home/stephen/Downloads/best-laptop-wallpaper.png"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },

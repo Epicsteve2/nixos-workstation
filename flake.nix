@@ -17,6 +17,10 @@
       url = "file:///home/stephen/Downloads/best-laptop-wallpaper.png";
       flake = false;
     };
+    inputactions = {
+      url = "github:taj-ny/InputActions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
