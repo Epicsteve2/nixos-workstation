@@ -158,6 +158,7 @@
     bat
     bottom
     chezmoi
+    clipse
     comma
     delta
     distrobox
@@ -193,9 +194,10 @@
     unstable.quickemu
     unzip
     wget
-    wmctrl
-    xclip
-    xdotool
+    wmctrl # needed for zsh-notify
+    # xclip
+    wl-clipboard
+    xdotool # needed for zsh-notify
     yt-dlp
     zip
     zoxide
