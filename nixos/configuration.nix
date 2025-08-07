@@ -115,12 +115,19 @@
   # programs.wireshark.enable = true;
   # programs.noisetorch.enable
   programs.ydotool.enable = true;
+  programs.direnv.enable = true;
   # services.openssh.enable = true;
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
-  services.lorri.enable = true;
+  # services.lorri.enable = true;
   xdg.portal.enable = true;
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      # Whatever settings desired.
+    };
+  };
 
   environment.variables = {
     BROWSER = "firefox";
@@ -131,7 +138,7 @@
     act
     azure-cli
     cargo
-    direnv
+    # direnv
     dive
     unstable.code-cursor
     gcc
@@ -148,7 +155,8 @@
     python312Packages.bpython
     rustc
     terraform
-    texliveMedium
+    # texliveFull
+    # texlive.combined.scheme-full
     typst
     unstable.vscode
 
@@ -186,6 +194,7 @@
     lazydocker
     libnotify
     miniserve
+    nh
     onefetch
     ripgrep
     systemctl-tui
@@ -233,7 +242,6 @@
     # lutris
     # dust
     ## for vim
-    # wl-clipboard
     # retroarch # there's also services.xserver.desktopManager.retroarch.enable
     # telegram-desktop
     # wireshark
@@ -243,7 +251,6 @@
     '')
   ];
 
-  # this should go in hardware-configuration?
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
@@ -274,12 +281,12 @@
   networking.firewall.enable = false;
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
-  services.xserver.enable = true;
+  services.xserver.enable = false;
   services.desktopManager.plasma6.enable = true;
   services.displayManager = {
-    defaultSession = "plasmax11";
+    defaultSession = "plasma";
     sddm = {
-      wayland.enable = false;
+      wayland.enable = true;
       enable = lib.mkDefault true;
       theme = "breeze";
       autoNumlock = true;
@@ -322,31 +329,31 @@
     ];
     packages = with pkgs; [ ];
   };
-  users.users.test1 = {
-    isNormalUser = true;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-      "libvirtd"
-      "uinput"
-      "input"
-    ];
-    password = "h";
-  };
-
-  users.users.test2 = {
-    isNormalUser = true;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-      "libvirtd"
-      "uinput"
-      "input"
-    ];
-    password = "h";
-  };
+  # users.users.test1 = {
+  #   isNormalUser = true;
+  #   extraGroups = [
+  #     "networkmanager"
+  #     "wheel"
+  #     "docker"
+  #     "libvirtd"
+  #     "uinput"
+  #     "input"
+  #   ];
+  #   password = "h";
+  # };
+  #
+  # users.users.test2 = {
+  #   isNormalUser = true;
+  #   extraGroups = [
+  #     "networkmanager"
+  #     "wheel"
+  #     "docker"
+  #     "libvirtd"
+  #     "uinput"
+  #     "input"
+  #   ];
+  #   password = "h";
+  # };
 
   security.sudo.extraConfig = ''
     Defaults timestamp_type=global
@@ -355,8 +362,8 @@
   security.sudo.wheelNeedsPassword = false;
 
   ## to add on desktop PC
-  # services.displayManager.autoLogin.enable = true;
-  # services.displayManager.autoLogin.user = "stephen";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "stephen";
 
   ## Some programs need SUID wrappers, can be configured further or are
   ## started in user sessions.

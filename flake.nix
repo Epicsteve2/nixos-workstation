@@ -4,6 +4,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixos-cli.url = "github:nix-community/nixos-cli";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +32,7 @@
       home-manager,
       plasma-manager,
       nix-alien,
+      nixos-cli,
       ...
     }@inputs:
     let
@@ -49,7 +51,10 @@
               config.allowUnfree = true;
             };
           };
-          modules = [ ./nixos/configuration.nix ];
+          modules = [
+            ./nixos/configuration.nix
+            nixos-cli.nixosModules.nixos-cli
+          ];
         };
       };
 
