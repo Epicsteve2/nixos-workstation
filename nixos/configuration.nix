@@ -44,47 +44,27 @@
   programs.nix-index.enable = true;
   programs.nix-ld.enable = true; # for dynamically linked libraries
   # chrome dependencies
-  # found with the script at https://www.rugu.dev/en/blog/nixos-precompiled/
+  # created by running nix-alien-ld --flake /home/stephen/.cache/puppeteer/chrome/linux-137.0.7151.55/chrome-linux64/chrome
   programs.nix-ld.libraries = with pkgs; [
-    alsa-lib
-    alsa-lib-with-plugins
-    at-spi2-atk
-    cairo
-    cups
-    dbus
-    # actually now idk if this is needed
-    driversi686Linux.mesa # gives error /home/stephen/.cache/puppeteer/chrome/linux-134.0.6998.35/chrome-linux64/chrome: error while loading shared libraries: libgbm.so.1: wrong ELF class: ELFCLASS32
-    eudev
-    expat
-    # ghdl-gcc # doesn't seem to work on 25.05
-    pkgs-24-11.ghdl-gcc
-    glamoroustoolkit
-    glib
-    glibc
-    glibc_memusage
-    glibc_multi
-    libgbm # this never showed up in the script i used. maybe nix-index is outdated?
-    libgcc
-    libudev-zero
-    libxkbcommon
-    mesa
-    nspr
-    nss
-    nss_latest
-    pango
-    saw-tools
-    systemd
-    systemdLibs
-    systemdMinimal
-    systemdUkify
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXrandr
-    xorg.libxcb
-    xorg_sys_opengl
+    alsa-lib.out
+    at-spi2-atk.out
+    cairo.out
+    cups.lib
+    dbus.lib
+    glib.out
+    libgbm.out
+    libxkbcommon.out
+    nspr.out
+    nss.out
+    pango.out
+    systemd.out
+    xorg.libX11.out
+    xorg.libXcomposite.out
+    xorg.libXdamage.out
+    xorg.libXfixes.out
+    xorg.libXrandr.out
+    xorg.libxcb.out
+    xorg_sys_opengl.out
   ];
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
@@ -120,12 +100,10 @@
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
-  # services.lorri.enable = true;
   xdg.portal.enable = true;
   services.nixos-cli = {
     enable = true;
     config = {
-      # Whatever settings desired.
     };
   };
 
@@ -136,9 +114,8 @@
   environment.systemPackages = with pkgs; [
     ## Languages and development
     act
-    azure-cli
+    (azure-cli.withExtensions [ azure-cli.extensions.containerapp ])
     cargo
-    # direnv
     dive
     unstable.code-cursor
     gcc
@@ -155,7 +132,6 @@
     python312Packages.bpython
     rustc
     terraform
-    # texliveFull
     # texlive.combined.scheme-full
     typst
     unstable.vscode
@@ -201,22 +177,22 @@
     sysz
     tealdeer
     unstable.quickemu
+    unstable.zellij
     unzip
     wget
-    wmctrl # needed for zsh-notify
-    # xclip
     wl-clipboard
+    wmctrl # needed for zsh-notify
     xdotool # needed for zsh-notify
     yt-dlp
     zip
     zoxide
+    # xclip
 
     ## Desktop
     audacity
     bruno
     chromium
     copyq
-    unstable.dbeaver-bin
     discord
     gimp
     libreoffice
@@ -230,6 +206,7 @@
     scrcpy
     slack
     strawberry
+    unstable.dbeaver-bin
     vlc
     wine
     winetricks
@@ -289,7 +266,7 @@
       wayland.enable = true;
       enable = lib.mkDefault true;
       theme = "breeze";
-      autoNumlock = true;
+      autoNumlock = false;
     };
   };
   services.xserver.xkb = {
@@ -329,7 +306,7 @@
     ];
     packages = with pkgs; [ ];
   };
-  # users.users.test1 = {
+  # users.users.test3 = {
   #   isNormalUser = true;
   #   extraGroups = [
   #     "networkmanager"
@@ -338,19 +315,8 @@
   #     "libvirtd"
   #     "uinput"
   #     "input"
-  #   ];
-  #   password = "h";
-  # };
-  #
-  # users.users.test2 = {
-  #   isNormalUser = true;
-  #   extraGroups = [
-  #     "networkmanager"
-  #     "wheel"
-  #     "docker"
-  #     "libvirtd"
-  #     "uinput"
-  #     "input"
+  #     "adbusers"
+  #     "ydotool"
   #   ];
   #   password = "h";
   # };

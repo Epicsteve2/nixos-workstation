@@ -103,24 +103,24 @@
           };
         };
 
-        fusuma = {
-          Unit = {
-            Description = "Touchpad gestures";
-          };
-          Service = {
-            Type = "simple";
-            Restart = "no";
-            ExecStart = "/run/current-system/sw/bin/fusuma";
-            Environment = [
-              "DISPLAY=:0"
-              "PATH=/run/current-system/sw/bin"
-            ];
-            KillMode = "process";
-          };
-          Install = {
-            WantedBy = [ "plasma-workspace.target" ];
-          };
-        };
+        # fusuma = {
+        #   Unit = {
+        #     Description = "Touchpad gestures";
+        #   };
+        #   Service = {
+        #     Type = "simple";
+        #     Restart = "no";
+        #     ExecStart = "/run/current-system/sw/bin/fusuma";
+        #     Environment = [
+        #       "DISPLAY=:0"
+        #       "PATH=/run/current-system/sw/bin"
+        #     ];
+        #     KillMode = "process";
+        #   };
+        #   Install = {
+        #     WantedBy = [ "plasma-workspace.target" ];
+        #   };
+        # };
       };
     };
   };
