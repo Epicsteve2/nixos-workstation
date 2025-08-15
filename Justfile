@@ -39,7 +39,8 @@ switch-nh:
   #!/usr/bin/env bash
   set -eux -o pipefail
   # can add --verbose
-  nh os switch ./ --hostname asus-vivobook
+  # --no-nom is to have download progress
+  nh os switch --no-nom ./ --hostname asus-vivobook
 
 update:
   #!/usr/bin/env bash

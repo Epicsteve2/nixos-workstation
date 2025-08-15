@@ -155,6 +155,7 @@
     ffmpeg-full
     fusuma
     fzf
+    gh
     gitui
     go-task
     gping
