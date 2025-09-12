@@ -126,7 +126,7 @@
     nixfmt-rfc-style
     inputs.nix-alien.packages.${pkgs.system}.nix-alien
     inputs.inputactions.packages.${pkgs.system}.inputactions-kwin
-    nodejs
+    nodejs_24
     pnpm
     python3
     python312Packages.bpython
