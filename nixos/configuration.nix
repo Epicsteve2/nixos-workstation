@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgs-24-11,
+  # pkgs-24-11,
   lib,
   inputs,
   outputs,
@@ -122,6 +122,7 @@
     go
     kdePackages.kate
     libqalculate
+    openssl
     unstable.neovim
     nixfmt-rfc-style
     inputs.nix-alien.packages.${pkgs.system}.nix-alien
@@ -202,6 +203,7 @@
     nomacs
     peek
     protonup-qt
+    prismlauncher
     qbittorrent
     qpdfview
     scrcpy

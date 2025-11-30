@@ -25,15 +25,17 @@ home-manager-nh:
 switch:
   #!/usr/bin/env bash
   set -eux -o pipefail
+  # Honestly, idk if this matters
   if [[ -n $(git ls-files --others --exclude-standard) ]]; then
     echo "There are untracked files! This may affect the build"
   fi
   nixos-rebuild switch --use-remote-sudo --flake .#asus-vivobook
 
-switch-nixos-cli:
-  #!/usr/bin/env bash
-  set -eux -o pipefail
-  nixos apply --yes .#asus-vivobook
+## I don't really use this
+# switch-nixos-cli:
+#   #!/usr/bin/env bash
+#   set -eux -o pipefail
+#   nixos apply --yes .#asus-vivobook
 
 switch-nh:
   #!/usr/bin/env bash
