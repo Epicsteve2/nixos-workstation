@@ -6,7 +6,7 @@ format:
 clean:
   #!/usr/bin/env bash
   set -eux -o pipefail
-  nh clean --verbose all --dry --keep 5 --keep-since 30d
+  nh clean all --keep 5 --keep-since 30d
 
 # For the first time, run `nix shell nixpkgs#home-manager`
 # To get KDE options, run `nix run github:nix-community/plasma-manager`

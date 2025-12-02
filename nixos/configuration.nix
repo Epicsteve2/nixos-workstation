@@ -125,13 +125,14 @@
     openssl
     unstable.neovim
     nixfmt-rfc-style
-    inputs.nix-alien.packages.${pkgs.system}.nix-alien
-    inputs.inputactions.packages.${pkgs.system}.inputactions-kwin
+    inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
+    inputs.inputactions.packages.${pkgs.stdenv.hostPlatform.system}.inputactions-kwin
     nodejs_24
     pnpm
     python3
     python312Packages.bpython
     rustc
+    statix
     terraform
     # texlive.combined.scheme-full
     typst
