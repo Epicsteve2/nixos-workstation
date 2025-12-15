@@ -1,3 +1,4 @@
+# fix copyq autostart
 {
   config,
   pkgs,
@@ -69,7 +70,14 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.libvirtd.enable = true; # todo https://nixos.wiki/wiki/Virt-manager
+  virtualisation.libvirtd.qemu.runAsRoot = true; # todo https://nixos.wiki/wiki/Virt-manager
+  # users.groups.libvirtd.members = [ "stephen" ];
   virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation.virtualbox.host = {
+    enable = true;
+    # enableKvm = true;
+    # addNetworkInterface = false;
+  };
   programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.fish.enable = true;
@@ -96,7 +104,7 @@
   # programs.noisetorch.enable
   programs.ydotool.enable = true;
   programs.direnv.enable = true;
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
