@@ -75,7 +75,7 @@
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.virtualbox.host = {
     enable = true;
-    # enableKvm = true;
+    enableKvm = false;
     # addNetworkInterface = false;
   };
   programs.firefox.enable = true;
@@ -126,6 +126,7 @@
     cargo
     dive
     unstable.code-cursor
+    # cursor-cli
     gcc
     go
     kdePackages.kate
@@ -135,6 +136,7 @@
     nixfmt-rfc-style
     inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
     inputs.inputactions.packages.${pkgs.stdenv.hostPlatform.system}.inputactions-kwin
+    mise
     nodejs_24
     pnpm
     python3
@@ -207,6 +209,7 @@
     discord
     gimp
     libreoffice
+    localsend
     megasync
     mpv
     nomacs
@@ -241,6 +244,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ]; # disable kvm cuz i use virtualbox for now
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
   boot.loader.grub = {

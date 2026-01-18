@@ -32,7 +32,7 @@
     "browser.gesture.swipe.left" = "";
     "browser.gesture.swipe.right" = "";
   };
-  services.copyq.enable = true;
+  # services.copyq.enable = true;
 
   programs.plasma = {
     enable = true;
@@ -50,7 +50,7 @@
       "services/systemsettings.desktop"."_launch" = "Meta+I";
       kwin."Grid View" = "Meta+Tab";
       "services/Alacritty.desktop"."_launch" = "Meta+T";
-      "services/com.github.hluk.copyq.desktop"."_launch" = "Meta+V";
+      # "services/com.github.hluk.copyq.desktop"."_launch" = "Meta+V";
       plasmashell."show-on-mouse-pos" = "Meta+Shift+V";
       plasmashell."next activity" = "Meta+Shift+Tab";
       ksmserver."Log Out" = "Meta+Shift+E";
