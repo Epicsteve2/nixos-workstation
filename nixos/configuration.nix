@@ -108,6 +108,10 @@
   # services.flatpak.enable = true;
   services.kanata.enable = true;
   services.kanata.package = pkgs.kanata-with-cmd;
+  services.earlyoom = {
+    enable = true;
+    enableNotifications = true;
+  };
   xdg.portal.enable = true;
   services.nixos-cli = {
     enable = true;
@@ -153,6 +157,7 @@
     atuin
     bat
     bottom
+    chafa
     chezmoi
     clipse
     comma
@@ -169,8 +174,10 @@
     fzf
     gh
     gitui
+    glow
     go-task
     gping
+    grc
     gtrash
     helix
     hexyl
@@ -181,10 +188,12 @@
     kdePackages.ksshaskpass
     kondo
     lazydocker
+    lesspipe
     libnotify
     miniserve
     nh
     onefetch
+    pandoc
     ripgrep
     systemctl-tui
     sysz
@@ -243,7 +252,8 @@
     '')
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # # this broke vbox, so just use LTS
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "kvm.enable_virt_at_load=0" ]; # disable kvm cuz i use virtualbox for now
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
