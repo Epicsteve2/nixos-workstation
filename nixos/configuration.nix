@@ -118,6 +118,7 @@
     config = {
     };
   };
+  services.tailscale.enable = true;
 
   environment.variables = {
     BROWSER = "firefox";
@@ -129,6 +130,7 @@
     (azure-cli.withExtensions [ azure-cli.extensions.containerapp ])
     cargo
     dive
+    unstable.claude-code
     unstable.code-cursor
     # cursor-cli
     gcc
