@@ -28,3 +28,4 @@ I just followed [Misterio77/nix-starter-configs](https://github.com/Misterio77/n
 - retroarch
 - fix chezmoi
 - maybe switch back to zinit
+- optional wallpaper

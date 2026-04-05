@@ -22,6 +22,9 @@
       url = "git+https://github.com/taj-ny/InputActions?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+    };
   };
 
   outputs =
@@ -50,6 +53,7 @@
             #   system = "x86_64-linux";
             #   config.allowUnfree = true;
             # };
+
           };
           modules = [
             ./nixos/configuration.nix

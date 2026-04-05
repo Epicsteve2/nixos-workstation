@@ -6,6 +6,7 @@
   lib,
   inputs,
   outputs,
+
   ...
 }:
 {
@@ -73,11 +74,11 @@
   virtualisation.libvirtd.qemu.runAsRoot = true; # todo https://nixos.wiki/wiki/Virt-manager
   # users.groups.libvirtd.members = [ "stephen" ];
   virtualisation.spiceUSBRedirection.enable = true;
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableKvm = false;
-    # addNetworkInterface = false;
-  };
+  # virtualisation.virtualbox.host = {
+  #   enable = true;
+  #   enableKvm = false;
+  #   # addNetworkInterface = false;
+  # };
   programs.firefox.enable = true;
   programs.zsh.enable = true;
   programs.fish.enable = true;
@@ -113,12 +114,48 @@
     enableNotifications = true;
   };
   xdg.portal.enable = true;
-  services.nixos-cli = {
+  programs.nixos-cli = {
     enable = true;
-    config = {
-    };
+    settings = { };
   };
   services.tailscale.enable = true;
+
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  # Static route to Fedora VM subnet via Fedora's LAN IP
+  networking.localCommands = ''
+    ip route replace 10.20.2.0/24 via 192.168.1.20
+  '';
+  networking.bridges.virbr-talos.interfaces = [ ];
+  networking.interfaces.virbr-talos.ipv4.addresses = [
+    {
+      address = "10.20.1.1";
+      prefixLength = 24;
+    }
+  ];
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "virbr-talos" ];
+    # Don't NAT VM-to-VM traffic (would break cross-host routing)
+    extraCommands = ''
+      iptables -t nat -I POSTROUTING -s 10.20.1.0/24 -d 10.20.2.0/24 -j RETURN
+    '';
+  };
+
+  services.dnsmasq = {
+    enable = true;
+    settings = {
+      interface = "virbr-talos";
+      bind-interfaces = true;
+      dhcp-range = [ "10.20.1.100,10.20.1.199,255.255.255.0,12h" ];
+      dhcp-option = [ "3,10.20.1.1" ];
+      dhcp-host = [
+        "52:54:00:a1:00:01,10.20.1.10" # node1 (controlplane)
+        "52:54:00:a1:00:02,10.20.1.11" # node2 (worker)
+        "52:54:00:a1:00:03,10.20.1.12" # node3 (worker)
+      ];
+    };
+  };
 
   environment.variables = {
     BROWSER = "firefox";
@@ -130,7 +167,7 @@
     (azure-cli.withExtensions [ azure-cli.extensions.containerapp ])
     cargo
     dive
-    unstable.claude-code
+    inputs.claude-code-nix.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
     unstable.code-cursor
     # cursor-cli
     gcc
@@ -152,6 +189,7 @@
     terraform
     # texlive.combined.scheme-full
     typst
+    # wireguard-tools
     unstable.vscode
 
     ## CLI
@@ -198,11 +236,13 @@
     pandoc
     ripgrep
     systemctl-tui
+    systemd-manager-tui
     sysz
     tealdeer
     unstable.quickemu
     unstable.zellij
     unzip
+    # uv # needed for claude code serena
     wget
     wl-clipboard
     wmctrl # needed for zsh-notify
@@ -256,7 +296,7 @@
 
   # # this broke vbox, so just use LTS
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ]; # disable kvm cuz i use virtualbox for now
+  # boot.kernelParams = [ "kvm.enable_virt_at_load=0" ]; # disable kvm cuz i use virtualbox for now
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 10;
   boot.loader.grub = {
@@ -351,6 +391,7 @@
 
   security.sudo.extraConfig = ''
     Defaults timestamp_type=global
+    Defaults pwfeedback
   '';
   ## temp
   security.sudo.wheelNeedsPassword = false;
