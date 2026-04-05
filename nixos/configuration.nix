@@ -123,9 +123,17 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # Static route to Fedora VM subnet via Fedora's LAN IP
-  networking.localCommands = ''
-    ip route replace 10.20.2.0/24 via 192.168.1.20
-  '';
+  systemd.services.vm-cross-host-route = {
+    description = "Static route to Fedora VM subnet";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "/run/current-system/sw/bin/ip route replace 10.20.2.0/24 via 192.168.1.20";
+    };
+  };
   networking.bridges.virbr-talos.interfaces = [ ];
   networking.interfaces.virbr-talos.ipv4.addresses = [
     {
